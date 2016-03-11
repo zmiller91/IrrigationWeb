@@ -19,6 +19,12 @@ CREATE TABLE arduino (
     foreign key (user_id) references user (id)
 );
 
+CREATE TABLE arduino_constants(
+	id int not null,
+    name varchar(256),
+    primary key (id)
+);
+
 CREATE TABLE serial(
 	id int not null auto_increment,
     arduino_id int,
@@ -34,12 +40,6 @@ CREATE TABLE serial(
     index `process_key` (arduino_id, process, date),
     index `type_key` (arduino_id, type, date),
     index `process_type` (arduino_id, process, type, date)
-);
-
-CREATE TABLE arduino_constants(
-	id int not null,
-    name varchar(256),
-    primary key (id)
 );
 
 INSERT INTO arduino_constants (name, id) VALUES("ON_OFF", 1);
@@ -59,11 +59,3 @@ INSERT INTO arduino_constants (name, id) VALUES("MOISTURE_SENSOR_ID", 3000);
 INSERT INTO arduino_constants (name, id) VALUES("PHOTORESISTOR_ID", 3001);
 INSERT INTO arduino_constants (name, id) VALUES("TEMP_SENSOR_ID", 3002);
 INSERT INTO arduino_constants (name, id) VALUES("MEM_USAGE_ID", 4000);
-
-SELECT * FROM SERIAL;
-
-select value, date from serial
-LEFT JOIN arduino_constants 
-on serial.process = arduino_constants.id
-WHERE arduino_constants.id = 3002
-AND serial.type = 2;
