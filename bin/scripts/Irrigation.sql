@@ -59,3 +59,29 @@ INSERT INTO arduino_constants (name, id) VALUES("MOISTURE_SENSOR_ID", 3000);
 INSERT INTO arduino_constants (name, id) VALUES("PHOTORESISTOR_ID", 3001);
 INSERT INTO arduino_constants (name, id) VALUES("TEMP_SENSOR_ID", 3002);
 INSERT INTO arduino_constants (name, id) VALUES("MEM_USAGE_ID", 4000);
+
+
+INSERT INTO user
+(username, password, created_date)
+VALUES
+("zmiller", "password", NOW());
+
+INSERT INTO arduino
+(user_id)
+VALUES
+(last_insert_id());
+
+set @arduino_id = last_insert_id();
+
+INSERT INTO serial
+(arduino_id, process, type, value, date)
+VALUES
+(@arduino_id, 3000, 2, 150, '2015-08-08'),
+(@arduino_id, 3001, 2, 65, '2015-08-08'),
+(@arduino_id, 3002, 2, 21, '2015-08-08'),
+(@arduino_id, 3000, 2, 135, '2015-08-09'),
+(@arduino_id, 3001, 2, 45, '2015-08-09'),
+(@arduino_id, 3002, 2, 18, '2015-08-09'),
+(@arduino_id, 3000, 2, 123, '2015-08-20'),
+(@arduino_id, 3001, 2, 76, '2015-08-20'),
+(@arduino_id, 3002, 2, 19, '2015-08-10');

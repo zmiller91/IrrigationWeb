@@ -1,13 +1,40 @@
 <html>
   <head>
     <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.js"></script>
     <script type="text/javascript" src="js/irrigation.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.css" type="text/css">
   </head>
 
-  <body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+  <body ng-app="app">
+      
+      
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-lg-12">
+                <div ng-controller="LineCtrl">
+                    <canvas id="line" class="chart chart-line" chart-data="chartData.moisture.data"
+                      chart-labels="chartData.moisture.labels" chart-legend="true" chart-series="chartData.moisture.series"
+                      chart-colours="chartData.moisture.colors" chart-click="onClick" >
+                    </canvas>
+
+                    <canvas id="line" class="chart chart-line" chart-data="chartData.temp.data"
+                      chart-labels="chartData.temp.labels" chart-legend="true" chart-series="chartData.temp.series"
+                      chart-colours="chartData.temp.colors" chart-click="onClick" >
+                    </canvas>
+
+                    <canvas id="line" class="chart chart-line" chart-data="chartData.light.data"
+                      chart-labels="chartData.light.labels" chart-legend="true" chart-series="chartData.light.series"
+                      chart-colours="chartData.light.colors" chart-click="onClick" >
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
   </body>
 </html>

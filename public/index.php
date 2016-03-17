@@ -29,7 +29,7 @@ if($strRequestMethod == "POST")
     }
 }
 
-if($strRequestMethod === "GET" )//&& isset($_GET["method"]) && $_GET["method"] == "sensor_data")
+if($strRequestMethod === "GET" && isset($_GET["method"]) && $_GET["method"] == "sensor_data")
 {
     
     $conn = Connection::getConnection("ima_user", "fotbaltym9");
@@ -50,8 +50,8 @@ if($strRequestMethod === "GET" )//&& isset($_GET["method"]) && $_GET["method"] =
         echo 500;
     }
 }
-//else
-//{
-//    readfile('html/main.html');
-//}
+else
+{
+    readfile('html/main.html');
+}
 
