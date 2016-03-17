@@ -19,7 +19,8 @@ angular.module("app", ["chart.js"])
         labels: [],
         data: [[]],
         series: ["Moisture"],
-        colors: [green]
+        colors: [green],
+        options: {type: "time", hover: {mode: false}}
     }
     
     var light = {
