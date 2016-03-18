@@ -38,17 +38,17 @@ angular.module("app", ["chart.js"])
 
     angular.forEach(data.moisture, function(value) {
         this.labels.push(value.date);
-        this.data[0].push(value.value);
+        this.data[0].push(parseInt(value.value));
     }, moisture);
 
     angular.forEach(data.photoresistor, function(value) {
         this.labels.push(value.date);
-        this.data[0].push(value.value);
+        this.data[0].push(parseInt(value.value));
     }, light);
 
     angular.forEach(data.temp, function(value) {
         this.labels.push(value.date);
-        this.data[0].push(value.value);
+        this.data[0].push(parseInt(value.value));
     }, temp);
     
     return {moisture: moisture, temp: temp, light: light};
