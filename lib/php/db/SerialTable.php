@@ -47,7 +47,16 @@ EOD;
         AND serial.type = 2
         AND date > DATE_SUB(NOW(), INTERVAL 1 DAY);
 EOD;
-        return $this->execute($sql);
+        $temp = $this->execute($sql);
+        $size = sizeof($temp);
+        for($i = 0; $i < sizeof($temp); $i++)
+        {
+            
+            $temp[$i]['value'] = preg_replace("/[^0-9]-:/", "", $temp[$i]['value']);
+            $temp[$i]['date'] = preg_replace("/[^0-9]-:/", "", $temp[$i]['date']);
+        }
+        
+        return $temp;
     }
     
     public function getPhotoresistorPoll()
