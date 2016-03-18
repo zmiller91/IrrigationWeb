@@ -1,4 +1,4 @@
-angular.module("app", ["chart.js"])
+angular.module("app", [])
         
 .controller("LineCtrl", function ($scope, $http) {
   
@@ -57,7 +57,21 @@ angular.module("app", ["chart.js"])
   
     $http.get('index.php', {params:{method: "sensor_data"}})
         .then(function(response) {
-            $scope.chartData = mapDataToChart(response.data);
+            
+            var mappedData = mapDataToChart(response.data);
+    
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: mappedData.moisture.labels,
+                        datasets: [{
+                                label: '# of Votes',
+                                data: mappedData.moisture.data[0]
+                        }]
+                    },
+                    options:{}
+            });
         }, function(error) {
             console.log(error);
         }

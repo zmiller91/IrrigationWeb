@@ -4,8 +4,8 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
     <script type="text/javascript" src="lib/ChartJS/Chart.js"></script>
-    <script type="text/javascript" src="lib/angular-chart/angular-chart.js"></script>
     <script type="text/javascript" src="js/irrigation.js"></script>
+    <script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.css" type="text/css">
   </head>
@@ -18,20 +18,8 @@
             <div class="col-lg-12">
                 <div ng-controller="LineCtrl">
 
-                    <canvas id="line" class="chart chart-line" chart-data="chartData.light.data"
-                      chart-labels="chartData.light.labels" chart-legend="true" chart-series="chartData.light.series"
-                      chart-colours="chartData.light.colors" chart-click="onClick" >
-                    </canvas>
+                    <canvas id="myChart" width="400" height="400"></canvas>
                     
-                    <canvas id="line" class="chart chart-line" chart-data="chartData.moisture.data"
-                      chart-labels="chartData.moisture.labels" chart-legend="true" chart-series="chartData.moisture.series"
-                      chart-options="chartData.moisture.options" chart-colours="chartData.moisture.colors" chart-click="onClick" >
-                    </canvas>
-
-                    <canvas id="line" class="chart chart-line" chart-data="chartData.temp.data"
-                      chart-labels="chartData.temp.labels" chart-legend="true" chart-series="chartData.temp.series"
-                      chart-colours="chartData.temp.colors" chart-click="onClick" >
-                    </canvas>
                 </div>
             </div>
         </div>
