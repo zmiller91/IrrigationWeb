@@ -52,8 +52,8 @@ EOD;
         for($i = 0; $i < sizeof($temp); $i++)
         {
             
-            $temp[$i]['value'] = preg_replace("/[^0-9]-:/", "", $temp[$i]['value']);
-            $temp[$i]['date'] = preg_replace("/[^0-9]-:/", "", $temp[$i]['date']);
+            $temp[$i]['value'] = preg_replace(('/[\x00-\x1F\x7F]/', "", $temp[$i]['value']);
+            $temp[$i]['date'] = preg_replace(('/[\x00-\x1F\x7F]/', "", $temp[$i]['date']);
         }
         
         return $temp;
