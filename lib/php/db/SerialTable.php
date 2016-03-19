@@ -88,7 +88,7 @@ EOD;
         WHERE arduino_constants.id IN (1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007)
         AND serial.type = 1
         AND date > DATE_SUB(NOW(), INTERVAL 1 DAY)
-        ORDER BY date DESC, arduino_constants.id DESC, arduino_constants.id ASC;
+        ORDER BY date DESC, arduino_constants.id DESC, arduino_constants.id DESC;
 EOD;
         return $this->execute($sql);
     }
