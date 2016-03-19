@@ -77,4 +77,18 @@ EOD;
 EOD;
         return $this->execute($sql);
     }
+    
+    public function getOnOffNotifications()
+    {
+        $sql = 
+<<<EOD
+        SELECT value, date from serial
+        LEFT JOIN arduino_constants 
+        ON serial.process = arduino_constants.id
+        WHERE arduino_constants.id IN (1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007)
+        AND serial.type = 1
+        AND date > DATE_SUB(NOW(), INTERVAL 1 DAY);
+EOD;
+        return $this->execute($sql);
+    }
 }

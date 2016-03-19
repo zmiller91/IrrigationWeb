@@ -42,7 +42,8 @@ if($strRequestMethod === "GET" && isset($_GET["method"]) && $_GET["method"] == "
         echo json_encode(array(
             "moisture" => $aMoisturePoll,
             "photoresistor" => $aPhotoPoll,
-            "temp" => $aTempPoll
+            "temp" => $aTempPoll, 
+            "notifications" => $oSerialTable->getOnOffNotifications()
         ));
     }
     else 
