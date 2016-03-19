@@ -11,7 +11,41 @@ angular.module("app", ["chart.js"])
     var blue_gray = '#4D5360';
 
     $scope.chartData = [];
+    $scope.notifications = {
+        data: [],
+        pageIndex: 0,
+        pageLength: 10,
+        curPage: 0,
+        
+        minPage: function(){
+            return this.data.length > 0 ? 0 : 1;
+        },
+        
+        maxPage: function(){
+            return this.data.length - 1;
+        },
+        
+        nextPage: function(){
+            if(this.maxPage() > this.pageIndex)
+            {
+                this.pageIndex++;
+                this.curPage = this.pageIndex * this.pageLength;
+                console.log(this.curPage);
+            }
+        }, 
+        
+        prevPage: function(){
+            if(this.minPage() < this.pageIndex)
+            {
+                this.pageIndex--;
+                this.curPage = this.pageIndex * this.pageLength;
+                console.log(this.curPage);
+            }
+        }
+    };
     $scope.view = "view-water";
+    
+  
     
     function getBlankChart(name, color){
 
@@ -63,7 +97,6 @@ angular.module("app", ["chart.js"])
                     this.addMA(data, "sum15", "num15", "count15", 15, 2);
                 }, this);
                 
-                var d = data[data.length - 1]["value"];
                 this.vars.current = data[data.length - 1]["value"];
             }
         }
@@ -85,12 +118,13 @@ angular.module("app", ["chart.js"])
     $http.get('index.php', {params:{method: "sensor_data"}})
         .then(function(response) {
             $scope.chartData = mapDataToChart(response.data);
+            $scope.notifications.data = response.data.notifications;
         }, function(error) {
             console.log(error);
         }
     );
 
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
+    $scope.onClick = function (points, evt) {
+        console.log(points, evt);
+    };
 });

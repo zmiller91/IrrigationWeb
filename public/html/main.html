@@ -118,7 +118,7 @@
                             <div id="view-water" ng-show="view === 'view-water'">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+                                        <i class="fa fa-bar-chart-o fa-fw"></i> Moisture Density
                                     </div>
                                     <div class="panel-body">
                                         <canvas id="line" class="chart chart-line" chart-data="chartData.moisture.data"
@@ -132,7 +132,7 @@
                             <div id="view-temp" ng-show="view === 'view-temp'">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+                                        <i class="fa fa-bar-chart-o fa-fw"></i> Temperature
                                     </div>
                                     <div class="panel-body">
                                         <canvas id="line" class="chart chart-line" chart-data="chartData.temp.data"
@@ -146,7 +146,7 @@
                             <div id="view-light" ng-show="view === 'view-light'">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+                                        <i class="fa fa-bar-chart-o fa-fw"></i> Light Density
                                     </div>
                                     <div class="panel-body">
                                         <canvas id="line" class="chart chart-line" chart-data="chartData.light.data"
@@ -159,7 +159,28 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bell fa-fw"></i> Component Notifications
+                            </div>
+                            <div class="panel-body">
+                                
+                                <div class="list-group">
+                                    <div href="#" class="list-group-item" ng-repeat="n in notifications.data 
+                                                | limitTo:notifications.pageLength:notifications.curPage">
+                                        <i ng-class="n.value == 1 ? 'fa  fa-circle fa-fw' : 'fa  fa-circle-o fa-fw'"></i> {{n.name}}: 
+                                        <em>{{n.value == 1 ? 'On' : 'Off'}}</em>
+                                        <span class="pull-right text-muted small"><em>{{n.date}}</em>
+                                        </span>
+                                    </div>
+                                </div>
+                                <a href="#" ng-click="notifications.prevPage()" class="btn btn-default btn-block">Previous</a>
+                                <a href="#" ng-click="notifications.nextPage()" class="btn btn-default btn-block">Next</a>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
                 
                 <!--Body ends here-->
