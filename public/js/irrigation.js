@@ -51,9 +51,9 @@ angular.module("app", ["chart.js"])
 
         return {
             labels: [],
-            data: [[], [], []],
-            series: [name, "5 Period MA", "15 Period MA"],
-            colors: [color, blue_gray, gray],
+            data: [[], []],
+            series: [name, "5 Period MA"],
+            colors: [color, blue_gray],
             vars: {
                 current: 0
             },
@@ -94,7 +94,6 @@ angular.module("app", ["chart.js"])
                 angular.forEach(data, function() {
                     this.addMA(data, "sum1", "num1", "count1", 1, 0);
                     this.addMA(data, "sum5", "num5", "count5", 5, 1);
-                    this.addMA(data, "sum15", "num15", "count15", 15, 2);
                 }, this);
                 
                 this.vars.current = data[data.length - 1]["value"];
