@@ -44,14 +44,14 @@ CREATE TABLE serial(
 
 INSERT INTO arduino_constants (name, id) VALUES("ON_OFF", 1);
 INSERT INTO arduino_constants (name, id) VALUES("POLL_RESULTS", 2);
-INSERT INTO arduino_constants (name, id) VALUES("PUMP_ID", 1000);
-INSERT INTO arduino_constants (name, id) VALUES("PERI_PUMP_ID", 1001);
-INSERT INTO arduino_constants (name, id) VALUES("MIXER_ID", 1002);
-INSERT INTO arduino_constants (name, id) VALUES("PHDOWN_ID", 1003);
-INSERT INTO arduino_constants (name, id) VALUES("PHUP_ID", 1004);
-INSERT INTO arduino_constants (name, id) VALUES("SOLENOID_ID", 1005);
-INSERT INTO arduino_constants (name, id) VALUES("LIGHT_ID", 1006);
-INSERT INTO arduino_constants (name, id) VALUES("FAN_ID", 1007);
+INSERT INTO arduino_constants (name, id) VALUES("Irrigation Pum", 1000);
+INSERT INTO arduino_constants (name, id) VALUES("Food pump", 1001);
+INSERT INTO arduino_constants (name, id) VALUES("Water Mixer", 1002);
+INSERT INTO arduino_constants (name, id) VALUES("PH Down Pump", 1003);
+INSERT INTO arduino_constants (name, id) VALUES("PH Up Pump", 1004);
+INSERT INTO arduino_constants (name, id) VALUES("Solenoid Valve", 1005);
+INSERT INTO arduino_constants (name, id) VALUES("Light", 1006);
+INSERT INTO arduino_constants (name, id) VALUES("Fan", 1007);
 INSERT INTO arduino_constants (name, id) VALUES("POLL_ID", 2000);
 INSERT INTO arduino_constants (name, id) VALUES("IRRIGATE_ID", 2001);
 INSERT INTO arduino_constants (name, id) VALUES("ILLUMINATE_ID", 2002);
@@ -59,7 +59,6 @@ INSERT INTO arduino_constants (name, id) VALUES("MOISTURE_SENSOR_ID", 3000);
 INSERT INTO arduino_constants (name, id) VALUES("PHOTORESISTOR_ID", 3001);
 INSERT INTO arduino_constants (name, id) VALUES("TEMP_SENSOR_ID", 3002);
 INSERT INTO arduino_constants (name, id) VALUES("MEM_USAGE_ID", 4000);
-
 
 INSERT INTO user
 (username, password, created_date)
