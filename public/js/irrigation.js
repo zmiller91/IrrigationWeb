@@ -78,7 +78,7 @@ angular.module("app", ["chart.js"])
                 else
                 {
                     // Remove the the oldest data point and add the new one
-                    this.vars[sum] -= this.data[index][this.vars[count] - periods];
+                    this.vars[sum] -= parseInt(data[this.vars[count] - periods]["value"]);
                     this.vars[sum] += ival;
                 }
 
