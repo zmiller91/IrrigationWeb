@@ -68,32 +68,47 @@ angular.module("app", ["chart.js"])
                 current: 0
             },
 
-            addMA: function(data, sum, num, count, periods, index){
+            addMA: function(data, sum, num, count, periods, index, callback){
 
+                // Initialize the varibles that will hold a moving average's
+                // calculatino information
                 if(this.vars[sum] === undefined || this.vars[count] === undefined || this.vars[num] === undefined)
                 {
+                    // The sum of all data points in a moving average
                     this.vars[sum] = 0;
-                    this.vars[count] = 0;
+                    
+                    // The number of data points in a moving average
                     this.vars[num] = 0;
+                    
+                    // The current index of a data point in an array containing
+                    // all datapoints
+                    this.vars[count] = 0;
                 }
-
+                
+                // Get the current data point and label 
                 var ival = parseInt(data[this.vars[count]]["value"]);
                 var label = data[this.vars[count]]["date"];
+                
+                // If the current number of data points in a calculation is
+                // less than the number of periods in the moving average, 
+                // then add to value to sum and increment num
                 if(this.vars[count] <  periods)
                 {   
                     // Add the value to sum, increment num
                     this.vars[sum] += ival;
                     this.vars[num]++;
                 }
+                
+                // Otherwise remove the oldest value and replace it with the 
+                // newest
                 else
                 {
                     // Remove the the oldest data point and add the new one
                     this.vars[sum] -= parseInt(data[this.vars[count] - periods]["value"]);
                     this.vars[sum] += ival;
                 }
-
-                this.data[index].push(this.vars[sum]/this.vars[num]);
-                this.vars[count]++;
+                
+                // All labels are datetimes, format them to be concise
                 if(this.labels.length < this.vars[count])
                 {
                     var parsedLabel = $filter('date')(
@@ -104,34 +119,59 @@ angular.module("app", ["chart.js"])
             
                     this.labels.push(parsedLabel);
                 }
+                
+                // If a callback is defined, then call it with the new
+                // average. The callback will return a formatted value
+                // which should be used. Otherwise, just ust the raw value.
+                
+                var value = this.vars[sum]/this.vars[num];
+                if(callback !== undefined)
+                {
+                    value = callback(value);
+                }
+                this.data[index].push(value);
+                
+                // On to the next one
+                this.vars[count]++;
             },
 
-            map: function(data){
+            map: function(data, callback){
                 angular.forEach(data, function() {
-                    this.addMA(data, "sum1", "num1", "count1", 1, 0);
+                    this.addMA(data, "sum1", "num1", "count1", 1, 0, callback);
 //                    this.addMA(data, "sum5", "num5", "count5", 5, 1);
                 }, this);
                 
-                this.vars.current = data[data.length - 1]["value"];
+                
+                console.log(this.data);
+                this.vars.current = this.data[0][this.data[0].length - 1];
             }
         }
     }
     function mapDataToChart(data)
     {
         var moisture = getBlankChart("Moisture", blue);
-        moisture.map(data.moisture);
         moisture.options.scales.yAxes[0].ticks.beginAtZero = true;
-        moisture.options.scales.yAxes[0].ticks.max = 700;
+        moisture.options.scales.yAxes[0].ticks.suggestedMax = 100;
+        moisture.map(data.moisture, function(value){
+            return Math.round(value / 700 * 100)
+        });
 
         var light = getBlankChart("Light", yellow);
-        light.map(data.photoresistor);
         light.options.scales.yAxes[0].ticks.beginAtZero = true;
-        light.options.scales.yAxes[0].ticks.max = 1200;
+        light.options.scales.yAxes[0].ticks.suggestedMax = 100;
+        light.map(data.photoresistor, function(value){
+            return Math.round(value / 1023 * 100)
+        });
 
         var temp = getBlankChart("Temperature", green);
-        temp.map(data.temp);
         temp.options.scales.yAxes[0].ticks.beginAtZero = true;
-        temp.options.scales.yAxes[0].ticks.max = 200;
+        temp.options.scales.yAxes[0].ticks.suggestedMax = 120;
+        temp.map(data.temp, function(reading){
+            var voltage = reading * 5 / 1024;
+            var celcius = (voltage - 0.5) * 100;
+            var ferenheit = (celcius * 9 / 5) + 32;
+            return Math.round(ferenheit);
+        });
 
         return {moisture: moisture, temp: temp, light: light};
     }
