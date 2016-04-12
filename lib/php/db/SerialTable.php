@@ -45,7 +45,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = 3000
         AND serial.type = 2
-        AND date > DATE_SUB(NOW(), INTERVAL 1 DAY);
+        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY);
 EOD;
         return $this->execute($sql);
     }
@@ -59,7 +59,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = 3001
         AND serial.type = 2
-        AND date > DATE_SUB(NOW(), INTERVAL 1 DAY);
+        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY);
 EOD;
         return $this->execute($sql);
     }
@@ -73,7 +73,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = 3002
         AND serial.type = 2
-        AND date > DATE_SUB(NOW(), INTERVAL 1 DAY);
+        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY);
 EOD;
         return $this->execute($sql);
     }
@@ -85,9 +85,9 @@ EOD;
         SELECT arduino_constants.name, value, date from serial
         LEFT JOIN arduino_constants 
         ON serial.process = arduino_constants.id
-        WHERE arduino_constants.id IN (1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007)
+        WHERE arduino_constants.id IN (1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 2000)
         AND serial.type = 1
-        AND date > DATE_SUB(NOW(), INTERVAL 1 DAY)
+        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY)
         ORDER BY date DESC, arduino_constants.id DESC, value ASC;
 EOD;
         return $this->execute($sql);
