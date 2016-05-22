@@ -1,0 +1,51 @@
+<div id="chart-view" class="row">
+    <div class="col-sm-12">
+        <div>
+
+            <div id="view-water" ng-show="view === 'view-water'">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Moisture Density
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="chartData.moisture.data"
+                          chart-labels="chartData.moisture.labels" chart-legend="true" chart-series="chartData.moisture.series"
+                          chart-colors="chartData.moisture.colors" chart-options="chartData.moisture.options" chart-click="onClick" 
+                          height="400">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-temp" ng-show="view === 'view-temp'">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Temperature
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="chartData.temp.data"
+                          chart-labels="chartData.temp.labels" chart-legend="true" chart-series="chartData.temp.series"
+                          chart-colors="chartData.temp.colors" chart-options="chartData.temp.options" chart-click="onClick" 
+                          height="400">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-light" ng-show="view === 'view-light'">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Light Density
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="chartData.light.data"
+                          chart-labels="chartData.light.labels" chart-legend="true" chart-series="chartData.light.series"
+                          chart-colors="chartData.light.colors" chart-options="chartData.light.options" chart-click="onClick" 
+                          height="400">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,18 +1,27 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+
+      <title>SB Admin 2 - Bootstrap Admin Theme</title>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
-    <script type="text/javascript" src="lib/ChartJS/Chart.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.0/Chart.js"></script>
     <script type="text/javascript" src="lib/angular-chart/angular-chart.js"></script>
-    <script type="text/javascript" src="js/irrigation.js"></script>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="lib/sbadmin2/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/sbadmin2/dist/css/timeline.css">
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/sb-admin-2.css">
-    <link href="lib/sbadmin2/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script type="text/javascript" src="js/irrigation.js"></script>
+    <script type="text/javascript" src="js/settings.js"></script>
+    <script type="text/javascript" src="js/timeline.js"></script>
+    <script type="text/javascript" src="js/notifications.js"></script>
 
   </head>
 
-  <body ng-app="app">
+  <body>
       
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
           <div class="navbar-header">
@@ -27,10 +36,9 @@
 
     </nav>
 
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class = "col-lg-1"></div>
-            <div class="col-lg-10"  ng-controller="IrrigationCtrl">
+    <div class="container">
+        <div class="row">
+            <div>
                 
                 <!--Body starts here-->
                 
@@ -40,155 +48,25 @@
                     </div>
                 </div>
                 
-                
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-tint fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">{{chartData.moisture.vars.current}}%</div>
-                                        <div>Water</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#"  ng-click="view = 'view-water'">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-lightbulb-o fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">{{chartData.light.vars.current}}%</div>
-                                        
-                                        <div>Light</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#"  ng-click="view = 'view-light'">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-fire fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">{{chartData.temp.vars.current}}&deg;F</div>
-                                        <div>Temperature</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#" ng-click="view = 'view-temp'">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                <div ng-app="app" ng-controller="IrrigationCtrl">
+                    <div chart-selection></div>
+                    <div chart-view></div>
                 </div>
                 
-                
+                <div id="settings" class="row" ng-controller="SettingsCtrl">
+                    <div class="col-md-8" activity-schedule></div>
+                    <div class="col-md-4" component-status></div>
+                </div>                
                 <div class="row">
-                    <div class="col-lg-8">
-                        <div>
-
-                            <div id="view-water" ng-show="view === 'view-water'">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i> Moisture Density
-                                    </div>
-                                    <div class="panel-body">
-                                        <canvas id="line" class="chart chart-line" chart-data="chartData.moisture.data"
-                                          chart-labels="chartData.moisture.labels" chart-legend="true" chart-series="chartData.moisture.series"
-                                          chart-colors="chartData.moisture.colors" chart-options="chartData.moisture.options" chart-click="onClick" >
-                                        </canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="view-temp" ng-show="view === 'view-temp'">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i> Temperature
-                                    </div>
-                                    <div class="panel-body">
-                                        <canvas id="line" class="chart chart-line" chart-data="chartData.temp.data"
-                                          chart-labels="chartData.temp.labels" chart-legend="true" chart-series="chartData.temp.series"
-                                          chart-colors="chartData.temp.colors" chart-options="chartData.temp.options" chart-click="onClick" >
-                                        </canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="view-light" ng-show="view === 'view-light'">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i> Light Density
-                                    </div>
-                                    <div class="panel-body">
-                                        <canvas id="line" class="chart chart-line" chart-data="chartData.light.data"
-                                          chart-labels="chartData.light.labels" chart-legend="true" chart-series="chartData.light.series"
-                                          chart-colors="chartData.light.colors" chart-options="chartData.light.options" chart-click="onClick" >
-                                        </canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <i class="fa fa-bell fa-fw"></i> Component Notifications
-                            </div>
-                            <div class="panel-body">
-                                
-                                <div class="list-group">
-                                    <div href="#" class="list-group-item" ng-repeat="n in notifications.data 
-                                                | limitTo:notifications.pageLength:notifications.curPage">
-                                        <i ng-class="n.value == 1 ? 'fa  fa-circle fa-fw' : 'fa  fa-circle-o fa-fw'"></i> {{n.name}}
-                                        {{n.value == 1 ? 'On' : 'Off'}}
-                                        <span class="pull-right text-muted small"><em>{{n.date}}</em>
-                                        </span>
-                                    </div>
-                                </div>
-                                <a href="#" ng-click="notifications.prevPage()" class="btn btn-default btn-block">Previous</a>
-                                <a href="#" ng-click="notifications.nextPage()" class="btn btn-default btn-block">Next</a>
-                            </div>
-                        </div>
-                        
-                    </div>
+                    <div id="notifications" class="col-md-4" ng-controller="NotificationsCtrl" notifications></div>
+                    <div id="timeline" class="col-md-8" ng-controller="TimelineCtrl" timeline></div>
                 </div>
-                
-                <!--Body ends here-->
-                
             </div>
-            <div class = "col-lg-1"></div>
         </div>
     </div>
+      
+
+    
+      
   </body>
 </html>

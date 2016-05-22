@@ -1,0 +1,30 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bell fa-fw"></i>&nbsp&nbsp Component Notifications
+    </div>
+    <div class="panel-body">
+
+        <div class="list-group">
+            <div href="#" class="list-group-item" 
+                 ng-repeat="n in notifications.data 
+                    | limitTo:notifications.pageLength:notifications.curPage">
+                
+                <i ng-class="(n.value == 0) ?
+                    'text-muted': 
+                    'text-primary'" 
+                    class="fa fa-power-off fa-fw">    
+                </i> 
+                &nbsp&nbsp&nbsp&nbsp {{n.name}}
+                {{n.value == 1 ? 'On' : 'Off'}}
+                <span class="pull-right text-muted"><em>{{n.date | date : 'MMM d, h:mm a'}}</em>
+                </span>
+                
+            </div>
+        </div>
+        
+        <a ng-click="notifications.prevPage()" class="btn btn-default btn-block">Newer</a>
+        <a ng-click="notifications.nextPage()" class="btn btn-default btn-block">Older</a>
+        
+    </div>
+</div>

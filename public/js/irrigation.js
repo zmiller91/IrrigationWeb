@@ -4,6 +4,8 @@ angular.module("app", ["chart.js"])
     
     Chart.defaults.global.tooltips.enabled = false;
     Chart.defaults.global.elements.point.radius = 0;
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.maintainAspectRatio = false;
 
     var gray = '#DCDCDC';
     var purple = '#803690';
@@ -14,41 +16,7 @@ angular.module("app", ["chart.js"])
     var blue_gray = '#4D5360';
                 
     $scope.chartData = [];
-    $scope.notifications = {
-        data: [],
-        pageIndex: 0,
-        pageLength: 10,
-        curPage: 0,
-        
-        minPage: function(){
-            return this.data.length > 0 ? 0 : 1;
-        },
-        
-        maxPage: function(){
-            return this.data.length - 1;
-        },
-        
-        nextPage: function(){
-            if(this.maxPage() > this.pageIndex)
-            {
-                this.pageIndex++;
-                this.curPage = this.pageIndex * this.pageLength;
-                console.log(this.curPage);
-            }
-        }, 
-        
-        prevPage: function(){
-            if(this.minPage() < this.pageIndex)
-            {
-                this.pageIndex--;
-                this.curPage = this.pageIndex * this.pageLength;
-                console.log(this.curPage);
-            }
-        }
-    };
     $scope.view = "view-water";
-    
-  
     
     function getBlankChart(name, color)
     {
@@ -61,7 +29,33 @@ angular.module("app", ["chart.js"])
                 scales: {
                     yAxes: [{
                         ticks: {}
-                    }]
+                    }],
+                    xAxes:[{
+                        type: "time",
+                        ticks:{
+                            position: "bottom",
+                            time: {
+                                // string/callback - By default, date objects are expected. You may use a pattern string from http://momentjs.com/docs/#/parsing/string-format/ to parse a time string format, or use a callback function that is passed the label, and must return a moment() instance.
+                                parser: false,
+                                // string - By default, unit will automatically be detected.  Override with 'week', 'month', 'year', etc. (see supported time measurements)
+                                unit: false,
+
+                                // Number - The number of steps of the above unit between ticks
+                                unitStepSize: 1,
+
+                                // string - By default, no rounding is applied.  To round, set to a supported time unit eg. 'week', 'month', 'year', etc.
+                                round: false,
+
+                                // Moment js for each of the units. Replaces `displayFormat`
+                                // To override, use a pattern string from http://momentjs.com/docs/#/displaying/format/
+                                displayFormats: {
+                                   
+                                    hour: 'MMM D, hA' // Sept 4, 5PM, // 11:20:01 AM
+                                },
+                                // Sets the display format used in tooltip generation
+                                tooltipFormat: ''
+                            }
+                    }}]
                 }
             },
             vars: {
@@ -111,13 +105,7 @@ angular.module("app", ["chart.js"])
                 // All labels are datetimes, format them to be concise
                 if(this.labels.length < this.vars[count])
                 {
-                    var parsedLabel = $filter('date')(
-                        Date.parse(label) , 
-                        "MM/dd/yy  h:mma", 
-                        "MST"
-                    );
-            
-                    this.labels.push(parsedLabel);
+                    this.labels.push(label);
                 }
                 
                 // If a callback is defined, then call it with the new
@@ -179,7 +167,6 @@ angular.module("app", ["chart.js"])
     $http.get('index.php', {params:{method: "sensor_data"}})
         .then(function(response) {
             $scope.chartData = mapDataToChart(response.data);
-            $scope.notifications.data = response.data.notifications;
         }, function(error) {
             console.log(error);
         }
@@ -188,4 +175,16 @@ angular.module("app", ["chart.js"])
     $scope.onClick = function (points, evt) {
         console.log(points, evt);
     };
+})
+
+.directive("chartSelection", function(){
+  return {
+    templateUrl: 'html/chart-selection.html'
+  };
+})
+
+.directive("chartView", function(){
+  return {
+    templateUrl: 'html/chart-view.html'
+  };
 });

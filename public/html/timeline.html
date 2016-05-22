@@ -1,0 +1,60 @@
+<div class="panel panel-default">
+    
+    <div class="panel-heading">
+        <i class="fa  fa-newspaper-o fa-fw"></i>&nbsp&nbsp Grow Journal
+    </div>
+    
+    <div class="panel-body">
+        
+        <ul class="timeline">
+            
+            <li ng-repeat="line in timeline" ng-class="line.type == IMAGE ? 'timeline-inverted' : ''">
+                
+                <!--badge color and icon-->
+                <div class="timeline-badge" ng-class="getBadgeColor(line)">
+                    <i class="fa " ng-class="getFontAwesome(line)"></i>
+                </div>
+                
+                <div class="timeline-panel">
+                    
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title"> {{line.title}}</h4>
+                        <p>
+                            <small class="text-muted">
+                                <i class="fa fa-clock-o"></i> {{line.date | date : 'MMM d, h:mm a'}}
+                            </small>
+                        </p>
+                    </div>
+                    
+                    <div>
+                        
+                        <!--image-->
+                        <div class="row" ng-show="line.image">
+                            <div class="panel-body">
+                                <img ng-src="{{line.image}}" class="img-responsive img-thumbnail" />
+                            </div>
+                        </div>
+                        
+                        <!--text-->
+                        <div class="row" ng-show="line.text">
+                            <div class="col-sm-12">
+                                <p>{{line.text}}</p>
+                            </div>
+                        </div>
+                        
+                        <!--list-->
+                        <div class="row" ng-show="line.list.length > 0">
+                            <ul>
+                                <li ng-repeat="item in line.list">
+                                    {{item}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+        </ul>
+        
+    </div>
+</div>
