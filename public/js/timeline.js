@@ -1,4 +1,4 @@
-angular.module("timeline", [])
+angular.module("timeline", ['angular-thumbnails'])
         
 .controller("TimelineCtrl", function ($scope, $http) {
     
@@ -10,7 +10,6 @@ angular.module("timeline", [])
         {
             type: 0, 
             date: 1288323623006, 
-            title: "Note added", 
             text: "Hand watered the plant, added 15 drops of pH Down to a gallon of water\n\
                     to achieve a pH of 6.0. The pH of runoff was approx. 7.0."
         },
@@ -18,7 +17,6 @@ angular.module("timeline", [])
         {
             type: 1, 
             date: 1288323623006, 
-            title: "Image uploaded", 
             text: "Ran into an issue with my tomatoes before transplanting.  These\n\
                     guys grew quick and ran out of space before we could plant them\n\
                     outside.", 
@@ -28,7 +26,6 @@ angular.module("timeline", [])
         {
             type: 2, 
             date: 1288323623006, 
-            title: "Configuration change", 
             list: [
                 "Minimum temperature changed from 65 to 68", 
                 "Irrigation halted", 

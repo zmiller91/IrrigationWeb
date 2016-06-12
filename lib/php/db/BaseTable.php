@@ -11,12 +11,14 @@
  *
  * @author Miller
  */
-class BaseTable {
+class BaseTable implements Errorable{
 
     private $conn;
+    private $m_aErrors;
     
     public function __construct($conn) {
         $this->conn = $conn;
+        $this->m_aErrors = array();
     }
     
     /*
@@ -25,15 +27,23 @@ class BaseTable {
      */
     public function execute($strQuery){
 
-        $result = $this->conn->query($strQuery);
-        
+        try
+        {
+            $result = $this->conn->query($strQuery);
+        }
+        catch (Exception $e)
+        {
+            $this->setError($e->getMessage());
+            $result = false;
+        }
         //If there's an error in the query then die
         if(!$result){
-            throw new Exception("Query: $strQuery, Error: ");
+            $this->setError($strQuery);
+            $result = false;
         }
         
         //If there is a mysqli_result then return it
-        if($result instanceof mysqli_result){
+        if($result && $result instanceof mysqli_result){
             return mysqli_fetch_all($result, MYSQLI_ASSOC);
         }
         
@@ -46,5 +56,23 @@ class BaseTable {
     public function selectLastInsertID(){
         $result = $this->execute("SELECT LAST_INSERT_ID() as 'id';");
         return $result[0]['id'];
+    }
+    
+    public function getErrors() 
+    {
+        return $this->m_aErrors;
+    }
+    
+    public function setError($error)
+    {
+        array_push($this->m_aErrors, $error);
+    }
+    
+    public function hasError() {
+        return !empty($this->m_aErrors);
+    }
+    
+    public function mergeErrors($aErrors) {
+        $this->m_aErrors = array_merge($this->m_aErrors, $aErrors);
     }
 }

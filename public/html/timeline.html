@@ -8,7 +8,7 @@
         
         <ul class="timeline">
             
-            <li ng-repeat="line in timeline" ng-class="line.type == IMAGE ? 'timeline-inverted' : ''">
+            <li ng-repeat="line in timeline" class="timeline-inverted">
                 
                 <!--badge color and icon-->
                 <div class="timeline-badge" ng-class="getBadgeColor(line)">
@@ -18,7 +18,6 @@
                 <div class="timeline-panel">
                     
                     <div class="timeline-heading">
-                        <h4 class="timeline-title"> {{line.title}}</h4>
                         <p>
                             <small class="text-muted">
                                 <i class="fa fa-clock-o"></i> {{line.date | date : 'MMM d, h:mm a'}}
@@ -32,6 +31,7 @@
                         <div class="row" ng-show="line.image">
                             <div class="panel-body">
                                 <img ng-src="{{line.image}}" class="img-responsive img-thumbnail" />
+                                <!--<thumbnail file-type="image" source="{{line.image}}" max-height="150" max-width="300"></thumbnail>-->
                             </div>
                         </div>
                         

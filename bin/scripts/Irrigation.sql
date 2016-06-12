@@ -13,27 +13,28 @@ create table user(
 );
 
 CREATE TABLE arduino (
-	id int not null auto_increment,
+    id int not null auto_increment,
     user_id int,
-	primary key (id),
+    conf blob,
+    primary key (id),
     foreign key (user_id) references user (id)
 );
 
 CREATE TABLE arduino_constants(
-	id int not null,
+    id int not null,
     name varchar(256),
     primary key (id)
 );
 
 CREATE TABLE serial(
-	id int not null auto_increment,
+    id int not null auto_increment,
     arduino_id int,
     process int, 
     type int,
     value int,
     date datetime,
 
-	primary key (id),
+    primary key (id),
     foreign key(arduino_id) references arduino(id),
     foreign key(process) references arduino_constants(id),
     foreign key(type) references arduino_constants(id),
@@ -42,12 +43,18 @@ CREATE TABLE serial(
     index `process_type` (arduino_id, process, type, date)
 );
 
+CREATE TABLE arduino_conf(
+    arduino_id int not null,
+    conf blob
+    
+    primary key(arduino_id)
+);
+
 CREATE TABLE changelog(
-	id int not null auto_increment,
+    id int not null auto_increment,
     arduino_id int,
-    component int,
-    state int,
-    val int,
+    arduino_const int,
+    value int,
     start_date date,
     end_date date,
     primary key(id),
