@@ -28,7 +28,7 @@ class User {
     public function __construct($oConn) {
         $this->oConn = $oConn;
         $this->bLoggedIn = false;
-        $this->strCookieIdentifier = "mine";
+        $this->strCookieIdentifier = "watchmefarm";
         $this->aErrors = [];
         $this->oUserTable = new UserTable($this->oConn);
         $this->strUserName = "";
@@ -106,7 +106,7 @@ class User {
                             $strExpiration, 
                             $bKeepLoggedIn);
             
-            $this->setCookie($this->iUserId, $strSelector, $strToken);
+            $this->setCookie($this->iUserId, $strSelector, $strToken, $strExpiration);
             $this->bLoggedIn = true;
             return $this->bLoggedIn;
             
@@ -125,7 +125,7 @@ class User {
         return $this->bLoggedIn;
     }
 
-    public function authenticate(){
+    public function authenticate($bSetCookie = false){
         
         //cookie must exist
         $strCookie = !empty($_COOKIE[$this->strCookieIdentifier]) 
@@ -156,7 +156,7 @@ class User {
             }
             
             //authenticated, generate new token and set new cookie
-            if($oUserSession['token'] === $strToken){
+            if($bSetCookie && $oUserSession['token'] === $strToken){
                 
                 $this->iUserId = $iUser;
                 $this->strUserName = $oUserSession['username'];
@@ -169,13 +169,17 @@ class User {
                         $strExpiration);
                 
                 Connection::commit($this->oConn);
-                $this->setCookie($iUser, $strSelector, $strNewToken);
+                $this->setCookie($iUser, $strSelector, $strNewToken, $strExpiration);
+                $this->bLoggedIn = true;
+                return $this->bLoggedIn;
+                
+            } elseif (!$bSetCookie) {
                 $this->bLoggedIn = true;
                 return $this->bLoggedIn;
                 
             //security violation. user and selector exists but the token has been
             //tampered with. delete everything.
-            }else{
+            } else {
                 $this->oUserTable->deleteAllSessions($iUser);
                 Connection::commit($this->oConn);
                 $this->bLoggedIn = false;
@@ -200,13 +204,13 @@ class User {
         return bin2hex(openssl_random_pseudo_bytes(60));
     }
     
-    private function setCookie($strUser, $strSelector, $strToken){
+    private function setCookie($strUser, $strSelector, $strToken, $strExpiration){
         $strCookie = "$strUser:$strSelector:$strToken";
-        setcookie($this->strCookieIdentifier, $strCookie);
+        setcookie($this->strCookieIdentifier, $strCookie, time() + 3600000, "/", DOMAIN);
     }
     
     private function deleteCookie(){
-        setcookie($this->strCookieIdentifier, '', time() - 3600);
+        setcookie($this->strCookieIdentifier, '', time() - 3600, "/", "", DOMAIN);
     }
     
     //return an token expiration date in MYSQL DATETIME format

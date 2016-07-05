@@ -2,9 +2,13 @@
 
 require_once '../app/ApplicationAutoloader.php';
 
-    
-$strRequestMethod = $_SERVER["REQUEST_METHOD"];
+    //create a connection and authenticate a user
 $oConnection = Connection::getConnection(DB_USER, DB_PASSWD);
+$oUser = new User($oConnection);
+$oUser->authenticate();
+
+$strRequestMethod = $_SERVER["REQUEST_METHOD"];
+
 if($strRequestMethod === "POST")
 {
     $mPostData = json_decode(file_get_contents('php://input'), true);
@@ -61,14 +65,14 @@ else if($strRequestMethod === "GET" && isset($_GET["method"]))
 
         if($aMoisturePoll && $aPhotoPoll && $aTempPoll){
 
-    //        echo json_encode(array(
-    //            "moisture" => $aMoisturePoll,
-    //            "photoresistor" => $aPhotoPoll,
-    //            "temp" => $aTempPoll, 
-    //            "notifications" => $oSerialTable->getOnOffNotifications();
-    //        ));
+            echo json_encode(array(
+                "moisture" => $aMoisturePoll,
+                "photoresistor" => $aPhotoPoll,
+                "temp" => $aTempPoll, 
+                "notifications" => $oSerialTable->getOnOffNotifications()
+            ));
 
-            echo file_get_contents("http://45.79.167.160//index.php?method=sensor_data");
+//            echo file_get_contents("http://45.79.167.160//index.php?method=sensor_data");
         }
         else 
         {

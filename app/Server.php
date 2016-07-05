@@ -6,6 +6,10 @@
  * and open the template in the editor.
  */
 
+
+define('DOMAIN', 'localhost'); 
 define('APP_NAME', 'Irrigation');
+define('DB_HOST', 'localhost');
 define('DB_USER', 'ima_user');
 define('DB_PASSWD', 'fotbaltym9'); 
+define('DB_IRRIGATION', 'irrigation');

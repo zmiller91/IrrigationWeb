@@ -31,7 +31,7 @@ EOD;
         $strQuery = 
 <<<EOD
     SELECT * 
-    FROM users
+    FROM user
     WHERE username = '$strUser';
 EOD;
         $oUser = $this->execute($strQuery);
@@ -41,7 +41,7 @@ EOD;
     public function createUser($strUser, $strPass){
         $strQuery = 
 <<<EOD
-    INSERT IGNORE INTO users 
+    INSERT IGNORE INTO user
     (username, password, created_date)
     VALUES ("$strUser", "$strPass", NOW());
 EOD;
@@ -66,14 +66,14 @@ EOD;
         $strQuery = 
 <<<EOD
     SELECT 
-        users.username,
+        user.username,
         user_sessions.id,
         user_sessions.user,
         user_sessions.token,
         user_sessions.expiration,
         user_sessions.persist
     FROM user_sessions
-    LEFT JOIN users ON users.id = user_sessions.user
+    LEFT JOIN user ON user.id = user_sessions.user
     WHERE user_sessions.id = $iSelector
     AND user = "$iUser";
 EOD;

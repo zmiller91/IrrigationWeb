@@ -11,6 +11,7 @@
     
     <script type="text/javascript" src="lib/angular-chart/angular-chart.js"></script>
     <script type="text/javascript" src="lib/angular-thumbnails/dist/angular-thumbnails.min.js"></script>
+    <script type="text/javascript" src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.0.js"></script>
     <link rel="stylesheet" href="lib/sbadmin2/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/timeline.css">
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/sb-admin-2.css">
@@ -19,9 +20,11 @@
     <script type="text/javascript" src="js/settings.js"></script>
     <script type="text/javascript" src="js/timeline.js"></script>
     <script type="text/javascript" src="js/notifications.js"></script>
+    <script type="text/javascript" src="user/user.js"></script>
+    <link type="text/css" href="css/watchmefarm.css" rel="stylesheet">
 
   </head>
-
+  
   <body>
       
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -34,7 +37,11 @@
               </button>
               <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
           </div>
-
+            <!--Registration and login modals-->
+            <ul id="user" ng-controller="UserController">
+                <li ng-show="!user.loggedIn"><a ng-click="register()">Register</a></li>
+                <li ng-show="!user.loggedIn"><a ng-click="login()">Login</a></li>
+            </ul>
     </nav>
 
     <div class="container">
