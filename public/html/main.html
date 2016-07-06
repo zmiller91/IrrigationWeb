@@ -9,10 +9,13 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.0/Chart.js"></script>
     <link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     
+    
     <script type="text/javascript" src="lib/angular-chart/angular-chart.js"></script>
     <script type="text/javascript" src="lib/angular-thumbnails/dist/angular-thumbnails.min.js"></script>
     <script type="text/javascript" src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.0.js"></script>
     <link rel="stylesheet" href="lib/sbadmin2/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/timeline.css">
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/sb-admin-2.css">
     
@@ -32,11 +35,22 @@
                   <span class="icon-bar"></span>
               </button>
               <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
-          </div>
-            <!--Registration and login modals-->
-            <ul id="user" ng-controller="UserController">
-                <li ng-show="!user.loggedIn"><a ng-click="register()">Register</a></li>
-                <li ng-show="!user.loggedIn"><a ng-click="login()">Login</a></li>
+            </div>
+        
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i>  
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <!--Registration and login modals-->
+                    <ul id="user" ng-controller="UserController"  class="dropdown-menu dropdown-user">
+                        <li ng-show="!user.loggedIn"><a ng-click="register()"><i class="fa fa-user fa-fw"></i>Register</a></li>
+                        <li ng-show="!user.loggedIn"><a ng-click="login()"><i class="fa fa-user fa-fw"></i>Login</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
             </ul>
     </nav>
 
@@ -52,7 +66,7 @@
                     </div>
                 </div>
                 
-                <div ng-controller="IrrigationCtrl">
+                <div ng-controller="ChartCtrl">
                     <div chart-selection></div>
                     <div chart-view></div>
                 </div>

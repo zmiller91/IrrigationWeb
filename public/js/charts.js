@@ -4,7 +4,7 @@ define(["../user/user"], function(user) {
         init: function(app) {
             user.init(app);
             
-            app.controller("IrrigationCtrl", function ($scope, ChartData) {
+            app.controller("ChartCtrl", function ($scope, ChartData) {
     
                 Chart.defaults.global.tooltips.enabled = false;
                 Chart.defaults.global.elements.point.radius = 0;
