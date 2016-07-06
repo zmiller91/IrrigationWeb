@@ -16,11 +16,7 @@
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/timeline.css">
     <link rel="stylesheet" href="lib/sbadmin2/dist/css/sb-admin-2.css">
     
-    <script type="text/javascript" src="js/irrigation.js"></script>
-    <script type="text/javascript" src="js/settings.js"></script>
-    <script type="text/javascript" src="js/timeline.js"></script>
-    <script type="text/javascript" src="js/notifications.js"></script>
-    <script type="text/javascript" src="user/user.js"></script>
+    <script data-main="js/watchmefarm" src="lib/require/require.js"></script>
     <link type="text/css" href="css/watchmefarm.css" rel="stylesheet">
 
   </head>
@@ -56,7 +52,7 @@
                     </div>
                 </div>
                 
-                <div ng-app="app" ng-controller="IrrigationCtrl">
+                <div ng-controller="IrrigationCtrl">
                     <div chart-selection></div>
                     <div chart-view></div>
                 </div>
