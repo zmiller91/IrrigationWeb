@@ -48,6 +48,7 @@
                     <ul id="user" ng-controller="UserController"  class="dropdown-menu dropdown-user">
                         <li ng-show="!user.loggedIn"><a ng-click="register()"><i class="fa fa-user fa-fw"></i>Register</a></li>
                         <li ng-show="!user.loggedIn"><a ng-click="login()"><i class="fa fa-user fa-fw"></i>Login</a></li>
+                        <li ng-show="user.loggedIn"><a ng-click="logout()"><i class="fa fa-user fa-fw"></i>Logout</a></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

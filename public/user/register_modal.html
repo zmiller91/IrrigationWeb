@@ -16,11 +16,19 @@
             <input class="form-control" type="password" ng-model="user.verified_pass" required />
         </div>
     </form>
-    <div class="error-container">
-        <small ng-cloak class="error" ng-show="register.username.$dirty && register.username.$error.required">Please input a username</small>
+    
+    <div class="error-container" ng-repeat="e in user.errors track by $index">
+        <div ng-switch on="e" class="alert alert-danger">
+            <div ng-switch-when="username_exists">
+                Username exists.
+            </div>
+            <div ng-switch-default>
+                {{e}}
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button>
     <button type="button" class="btn btn-primary" ng-click="submit()">Submit</button>
 </div>

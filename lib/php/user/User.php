@@ -70,7 +70,7 @@ class User {
            
         //user exists
         }else{
-            $this->aErrors = self::ERR_USERNAME_EXISTS;
+            array_push($this->aErrors, self::ERR_USERNAME_EXISTS);
             $this->bLoggedIn = false;
             $this->deleteCookie();
             return $this->bLoggedIn;
