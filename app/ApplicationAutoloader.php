@@ -1,6 +1,5 @@
 <?php
 require_once 'Server.php';
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/'.APP_NAME.'/');
 $GLOBALS['AUTOLOAD_CACHE_PATH']  = ROOT_PATH . "cache/classpaths.cache";
 if(!file_exists($AUTOLOAD_CACHE_PATH))
 {

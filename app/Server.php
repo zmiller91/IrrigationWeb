@@ -8,7 +8,7 @@
 
 
 define('DOMAIN', 'localhost'); 
-define('APP_NAME', 'Irrigation');
+define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/Irrigation/');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'ima_user');
 define('DB_PASSWD', 'fotbaltym9'); 
