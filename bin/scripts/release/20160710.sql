@@ -1,4 +1,5 @@
 
+USE irrigation;
 
 CREATE TABLE user_sessions(
     id int not null auto_increment,
