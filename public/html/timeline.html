@@ -6,11 +6,44 @@
     
     <div class="panel-body">
         
-        <ul class="timeline">
+        <div ng-repeat="line in timeline">
+                    
+            <div>
+
+                <!--image-->
+                <div class="row" ng-show="line.image">
+                    <canvas id="{{line.id}}">
+                    </canvas>
+                </div>
+
+                <!--text-->
+                <div class="row" ng-show="line.text">
+                    <div class="col-sm-12">
+                        <p>{{line.text}}</p>
+                    </div>
+                </div>
+
+                <!--list-->
+                <div class="row" ng-show="line.list.length > 0">
+                    <ul>
+                        <li ng-repeat="item in line.list">
+                            {{item}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p>
+                <small class="text-muted">
+                    <i class="fa fa-clock-o"></i> {{line.date | date : 'MMM d, h:mm a'}}
+                </small>
+            </p>
+        </div>
+        
+<!--        <ul class="timeline">
             
             <li ng-repeat="line in timeline" class="timeline-inverted">
                 
-                <!--badge color and icon-->
+                badge color and icon
                 <div class="timeline-badge" ng-class="getBadgeColor(line)">
                     <i class="fa " ng-class="getFontAwesome(line)"></i>
                 </div>
@@ -27,22 +60,22 @@
                     
                     <div>
                         
-                        <!--image-->
+                        image
                         <div class="row" ng-show="line.image">
                             <div class="panel-body">
                                 <img ng-src="{{line.image}}" class="img-responsive img-thumbnail" />
-                                <!--<thumbnail file-type="image" source="{{line.image}}" max-height="150" max-width="300"></thumbnail>-->
+                                <thumbnail file-type="image" source="{{line.image}}" max-height="150" max-width="300"></thumbnail>
                             </div>
                         </div>
                         
-                        <!--text-->
+                        text
                         <div class="row" ng-show="line.text">
                             <div class="col-sm-12">
                                 <p>{{line.text}}</p>
                             </div>
                         </div>
                         
-                        <!--list-->
+                        list
                         <div class="row" ng-show="line.list.length > 0">
                             <ul>
                                 <li ng-repeat="item in line.list">
@@ -54,7 +87,7 @@
                 </div>
             </li>
             
-        </ul>
+        </ul>-->
         
     </div>
 </div>

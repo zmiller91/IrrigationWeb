@@ -74,13 +74,16 @@
                     <div chart-view></div>
                 </div>
                 
-                <div id="settings" class="row" ng-controller="SettingsCtrl">
-                    <div class="col-md-8" activity-schedule></div>
-                    <div class="col-md-4" component-status></div>
-                </div>                
                 <div class="row">
-                    <div id="notifications" class="col-md-4" ng-controller="NotificationsCtrl" notifications></div>
-                    <div id="timeline" class="col-md-8" ng-controller="TimelineCtrl" timeline></div>
+                    <div class="col-md-4">
+                        <div ng-controller="ComponentsCtrl" component-status></div>
+                        <div ng-controller="NotificationsCtrl" notifications></div>
+                    </div>
+                    <div class="col-md-8">
+                        <div ng-controller="ActivitiesCtrl" activity-schedule></div>
+                        <div ng-controller="TimelineCtrl" timeline></div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

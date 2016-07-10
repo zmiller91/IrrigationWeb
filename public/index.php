@@ -53,12 +53,17 @@ else if($strRequestMethod === "GET" && isset($_GET["method"]))
         $oArduinoConf = new ArduinoConf_GET($oConnection, $_GET);
         $oArduinoConf->run();
     }
-    
-                
+           
     if($_GET["method"] === "notifications")
     {
         $oNotifications = new Notifications_GET($oConnection, $_GET);
         $oNotifications->run();
+    }
+           
+    if($_GET["method"] === "component_status")
+    {
+        $ComponentStatus = new ComponentStatus_GET($oConnection, $_GET);
+        $ComponentStatus->run();
     }
     
     if($_GET["method"] === "sensor_data")

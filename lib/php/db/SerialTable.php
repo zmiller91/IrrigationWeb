@@ -92,4 +92,32 @@ EOD;
 EOD;
         return $this->execute($sql);
     }
+    
+    public function getComponentStatus($iComponent)
+    {
+        $sql = 
+<<<EOD
+        SELECT arduino_constants.name, value, date from serial
+        LEFT JOIN arduino_constants 
+        ON serial.process = arduino_constants.id
+        WHERE arduino_constants.id = $iComponent
+        AND arduino_id=2
+        ORDER BY date DESC, value ASC
+        LIMIT 1;
+EOD;
+        return $this->execute($sql);
+    }
+    
+    public function getEmptySerial($iComponent) 
+    {
+        
+        $sql = 
+<<<EOD
+        SELECT id, name, '2' AS arduino_id, id AS process, 
+                '1' AS type, '0' AS value, null AS date 
+        FROM arduino_constants 
+        WHERE id = $iComponent;
+EOD;
+        return $this->execute($sql);
+    }
 }
