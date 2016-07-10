@@ -13,6 +13,8 @@
  */
 class SerialTable extends BaseTable{
     
+    private $m_lookback = 2;
+    
     public function __construct($conn) {
         parent::__construct($conn);
     }
@@ -45,7 +47,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = 3000
         AND serial.type = 2
-        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY);
+        AND date > DATE_SUB(NOW(), INTERVAL $this->m_lookback DAY);
 EOD;
         return $this->execute($sql);
     }
@@ -59,7 +61,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = 3001
         AND serial.type = 2
-        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY);
+        AND date > DATE_SUB(NOW(), INTERVAL $this->m_lookback DAY);
 EOD;
         return $this->execute($sql);
     }
@@ -73,7 +75,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = 3002
         AND serial.type = 2
-        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY);
+        AND date > DATE_SUB(NOW(), INTERVAL $this->m_lookback DAY);
 EOD;
         return $this->execute($sql);
     }
@@ -87,7 +89,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = $iNotification
         AND serial.type = 1
-        AND date > DATE_SUB(NOW(), INTERVAL 2 DAY)
+        AND date > DATE_SUB(NOW(), INTERVAL $this->m_lookback DAY)
         ORDER BY date DESC, arduino_constants.id DESC, value ASC;
 EOD;
         return $this->execute($sql);
@@ -102,6 +104,7 @@ EOD;
         ON serial.process = arduino_constants.id
         WHERE arduino_constants.id = $iComponent
         AND arduino_id=2
+        AND date > DATE_SUB(NOW(), INTERVAL $this->m_lookback DAY)
         ORDER BY date DESC, value ASC
         LIMIT 1;
 EOD;
