@@ -13,3 +13,4 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'ima_user');
 define('DB_PASSWD', 'fotbaltym9'); 
 define('DB_IRRIGATION', 'irrigation');
+define('AUTOLOAD_CACHE_PATH', ROOT_PATH . "cache/classpaths.cache");
