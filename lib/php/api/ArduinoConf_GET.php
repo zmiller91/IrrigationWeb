@@ -13,18 +13,23 @@
  */
 class ArduinoConf_GET extends Service{
     
-    protected $m_aParams;
-    
-    public function __construct($oConnection, $aParams) {
-        parent::__construct($oConnection);
-        $this->m_aParams = $aParams;
+    public function __construct($oConnection, $aInput) 
+    {
+        parent::__construct($oConnection, $aInput);
     }
-    
+
+    protected function authorize() {
+        return true;
+    }
+    /**
+     * 
+     * @return type
+     */
     protected function validate()
     {
-        $bSuccess = !empty($this->m_aParams["arduino_id"]);
-        $bSuccess = $bSuccess && is_numeric($this->m_aParams["arduino_id"]);
-        $bSuccess = $bSuccess && intval($this->m_aParams["arduino_id"]) >= 0;
+        $bSuccess = !empty($this->m_aInput["arduino_id"]);
+        $bSuccess = $bSuccess && is_numeric($this->m_aInput["arduino_id"]);
+        $bSuccess = $bSuccess && intval($this->m_aInput["arduino_id"]) >= 0;
         
         if(!$bSuccess)
         {
@@ -36,7 +41,7 @@ class ArduinoConf_GET extends Service{
     protected function execute()
     {
         $oArduinoTable = new ArduinoTable($this->m_oConnection);
-        $oData = $oArduinoTable->get($this->m_aParams["arduino_id"]);
+        $oData = $oArduinoTable->get($this->m_aInput["arduino_id"]);
         
         $bSuccess = true;
         if($oArduinoTable->hasError())

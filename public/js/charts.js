@@ -172,8 +172,10 @@ define(["../user/user"], function(user) {
                     console.log(points, evt);
                 };
                 
-                $scope.$on('user:authorized', function(event,data) {
-                    console.log("doo");
+                angular.element(document).ready(function() {
+                    ChartData.get(function(data){
+                        $scope.chartData = mapDataToChart(data);
+                    }, function(){});
                 });
             })
 
@@ -190,16 +192,20 @@ define(["../user/user"], function(user) {
             })
 
             .service('ChartData', ['$rootScope', '$http', function($rootScope, $http) {
-                 console.log("inside");
-                $rootScope.$on('user:authorized', function(event,data) {
+                this.response = {};
+                this.data = {};
+                
+                this.get =  function(success,error) {
                     $http.get('index.php', {params:{method: "sensor_data"}})
                         .then(function(response) {
-//                            $scope.chartData = mapDataToChart(response.data);
-                        }, function(error) {
-                            console.log(error);
+                            this.response = response;
+                            this.data = response.data;
+                            success(this.data);
+                        }, function(response) {
+                            error(response);
                         }
                     );
-                });
+                };
             }]);
         }
     };

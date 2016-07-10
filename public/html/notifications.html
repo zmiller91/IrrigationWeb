@@ -1,14 +1,24 @@
+<script type="text/ng-template" id="notifications_popover.html">
+    <div class="uib-popover-popup">fuck</div>
+</script>
+
 
 <div class="panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-bell fa-fw"></i>&nbsp&nbsp Component Notifications
     </div>
     <div class="panel-body">
-
+        
+        <div class="wmf-multiselect">
+            <multiselect ng-model="selection" options="options" id-prop="id" display-prop="name" show-select-all="true" show-unselect-all="true"></multiselect>
+        </div>
+        
         <div class="list-group">
-            <div href="#" class="list-group-item" 
-                 ng-repeat="n in notifications.data 
-                    | limitTo:notifications.pageLength:notifications.curPage">
+            <div class="list-group-item" 
+                 ng-repeat="n in notifications.filtered
+                    | limitTo:notifications.pageLength:notifications.curPage
+                    track by $index"
+                ng-class="{'first': $first, 'last': $last}">
                 
                 <i ng-class="(n.value == 0) ?
                     'text-muted': 
@@ -23,8 +33,8 @@
             </div>
         </div>
         
-        <a ng-click="notifications.prevPage()" class="btn btn-default btn-block">Newer</a>
-        <a ng-click="notifications.nextPage()" class="btn btn-default btn-block">Older</a>
+        <a ng-click="notifications.newer()" class="btn btn-default btn-block">Newer</a>
+        <a ng-click="notifications.older()" class="btn btn-default btn-block">Older</a>
         
     </div>
 </div>

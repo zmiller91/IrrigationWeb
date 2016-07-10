@@ -78,14 +78,14 @@ EOD;
         return $this->execute($sql);
     }
     
-    public function getOnOffNotifications()
+    public function getOnOffNotifications($iNotification)
     {
         $sql = 
 <<<EOD
         SELECT arduino_constants.name, value, date from serial
         LEFT JOIN arduino_constants 
         ON serial.process = arduino_constants.id
-        WHERE arduino_constants.id IN (1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 2000)
+        WHERE arduino_constants.id = $iNotification
         AND serial.type = 1
         AND date > DATE_SUB(NOW(), INTERVAL 2 DAY)
         ORDER BY date DESC, arduino_constants.id DESC, value ASC;

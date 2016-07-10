@@ -19,10 +19,12 @@ abstract class Service implements Errorable{
     private $m_aErrors;
     private $m_iStatusCode;
     protected $m_oUser;
+    protected $m_aInput;
     
-    public function __construct($oConnection)
+    public function __construct($oConnection, $aInput)
     {
         $this->m_oConnection = $oConnection;
+        $this->m_aInput = $aInput;
         $this->m_mData = null;
         
         $this->m_aErrors = array();
@@ -91,6 +93,12 @@ abstract class Service implements Errorable{
         echo json_encode($oOut);
     }
     
+    /**
+     * Returns true if the user input is valid, otherwise false. 
+     * 
+     * @return boolean
+     */
+    abstract protected function authorize();
     abstract protected function validate();
     abstract protected function execute();
 }

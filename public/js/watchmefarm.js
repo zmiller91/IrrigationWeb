@@ -3,13 +3,13 @@ define([
     'charts',
     'notifications',
     'settings',
-    'timeline'
+    'timeline',
 ],
 
   function(user, charts, notifications, settings, timeline){
       
     // Create the base module for the page
-    var wmf = angular.module('watchmefarm', ['chart.js', 'angular-thumbnails', 'ui.bootstrap']);
+    var wmf = angular.module('watchmefarm', ['chart.js', 'ui.bootstrap', 'btorfs.multiselect']);
     
     // Init the controllers, directives, and services for all the components
     // on the page

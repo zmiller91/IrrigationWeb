@@ -54,6 +54,13 @@ else if($strRequestMethod === "GET" && isset($_GET["method"]))
         $oArduinoConf->run();
     }
     
+                
+    if($_GET["method"] === "notifications")
+    {
+        $oNotifications = new Notifications_GET($oConnection, $_GET);
+        $oNotifications->run();
+    }
+    
     if($_GET["method"] === "sensor_data")
     {
         
@@ -68,8 +75,7 @@ else if($strRequestMethod === "GET" && isset($_GET["method"]))
             echo json_encode(array(
                 "moisture" => $aMoisturePoll,
                 "photoresistor" => $aPhotoPoll,
-                "temp" => $aTempPoll, 
-                "notifications" => $oSerialTable->getOnOffNotifications()
+                "temp" => $aTempPoll
             ));
 
 //            echo file_get_contents("http://45.79.167.160//index.php?method=sensor_data");

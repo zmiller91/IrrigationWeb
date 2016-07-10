@@ -75,4 +75,8 @@ class BaseTable implements Errorable{
     public function mergeErrors($aErrors) {
         $this->m_aErrors = array_merge($this->m_aErrors, $aErrors);
     }
+    
+    protected function arrayToIN($aIn) {
+        return "(" . implode(",", $aIn ) . ")";
+    }
 }

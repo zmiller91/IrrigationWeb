@@ -193,7 +193,7 @@ define([], function() {
                     this.name = this.data.name;
                     this.loggedIn = this.data.loggedIn;
                     this.errors = this.data.errors;
-                    $rootScope.$broadcast('user:updated',this. data);
+                    $rootScope.$broadcast('user:updated',this.data);
                 }
             }]);
         }
