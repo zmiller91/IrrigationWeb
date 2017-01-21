@@ -8,3 +8,33 @@
 .wmf-multiselect {
     padding-bottom: 6px;
 }
+
+#components .well {
+    margin-bottom: 0px;
+}
+
+#components .name {
+    padding-top: 4px;
+}
+
+#components label {
+    font-weight: normal;
+}
+
+#components .save {
+    margin-bottom: 5px;
+}
+
+#components form a {
+    opacity: .65;
+} 
+
+#components fieldset[disabled="disabled"] form a {
+    opacity: .25;
+    background: gray;
+    border-color: gray;
+} 
+
+#components .panel-footer {
+    text-align: right;
+} 

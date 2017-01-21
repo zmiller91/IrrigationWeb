@@ -1,1 +1,3 @@
-public/lib/*
+cache/
+nbproject/*
+public/lib
