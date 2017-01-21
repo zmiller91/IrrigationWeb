@@ -1,0 +1,3 @@
+[submodule "lib/php/comoon"]
+	path = lib/php/common
+	url = https://github.com/zmiller91/php-common

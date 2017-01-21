@@ -11,13 +11,21 @@
  *
  * @author zmiller
  */
-class ComponentStatus_GET extends Service{
+class Components extends Service{
+
+    protected function allowableMethods() {
+        return array(self::GET);
+    }
     
     protected function authorize() {
         return true;
     }
 
-    protected function execute() {
+    protected function validate() {
+        return true;
+    }
+
+    protected function get() {
         
         $oSerialTable = new SerialTable($this->m_oConnection);
         $aComponents = array();
@@ -42,10 +50,4 @@ class ComponentStatus_GET extends Service{
         $this->setData($aComponents);
         return true;
     }
-
-    protected function validate() {
-        return true;
-    }
-
-//put your code here
 }

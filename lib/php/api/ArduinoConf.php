@@ -11,11 +11,10 @@
  *
  * @author zmiller
  */
-class ArduinoConf_GET extends Service{
-    
-    public function __construct($oConnection, $aInput) 
-    {
-        parent::__construct($oConnection, $aInput);
+class ArduinoConf extends Service {
+
+    protected function allowableMethods() {
+        return array(self::GET, self::POST);
     }
 
     protected function authorize() {
@@ -38,7 +37,7 @@ class ArduinoConf_GET extends Service{
         return $bSuccess;
     }
     
-    protected function execute()
+    protected function get()
     {
         $oArduinoTable = new ArduinoTable($this->m_oConnection);
         $oData = $oArduinoTable->get($this->m_aInput["arduino_id"]);
@@ -56,5 +55,9 @@ class ArduinoConf_GET extends Service{
         }
         
         return $bSuccess;
+    }
+    
+    protected function post() {
+        
     }
 }

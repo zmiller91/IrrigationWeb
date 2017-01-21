@@ -1,98 +1,44 @@
-<?php
 
-require_once '../app/ApplicationAutoloader.php';
-
-    //create a connection and authenticate a user
-$oConnection = Connection::getConnection(DB_USER, DB_PASSWD);
-$oUser = new User($oConnection);
-$oUser->authenticate();
-
-$strRequestMethod = $_SERVER["REQUEST_METHOD"];
-
-if($strRequestMethod === "POST")
-{
-    $mPostData = json_decode(file_get_contents('php://input'), true);
+<?php 
+    require_once("../app/ApplicationAutoloader.php");
     
-            
-    if(!empty($mPostData['method']) && $mPostData['method'] === "configuration")
-    {
-        $oArduinoConf = new ArduinoConf_POST($oConnection, $mPostData);
-        $oArduinoConf->run();
-    }
+    // Format the request path and break it into parts. For debugging purposes, 
+    // remove the public directory portion of the URL, if it exists.
+    $publicDirectory = trim($_SERVER["PUBLIC_DIR"], "/");
+    $requestURI = ltrim(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH), "/"); 
+    $uri = preg_replace("/^" . preg_quote($publicDirectory, "/") . "/", "", $requestURI);
+    $uri =  trim($uri, "/");
     
-    // This default block is what a grow box calls to POST data
-    else
-    {
-        $mPostData["values"] = explode(":", $mPostData["values"]);
-        if(sizeof($mPostData["values"]) == 4)
-        {
-            $oSerialTable = new SerialTable($oConnection);
-            if($oSerialTable->insertData($mPostData))
-            {
-                Connection::commit($oConnection);
-                echo 204;
-            }
-            else 
-            {
-                Connection::rollback($oConnection);
-                echo 500;
-            }
-        }
-        else
-        {
-            echo 422;
-        }
-    }
-}
-
-else if($strRequestMethod === "GET" && isset($_GET["method"]))
-{
-    
-    if($_GET["method"] === "configuration")
-    {
-        $oArduinoConf = new ArduinoConf_GET($oConnection, $_GET);
-        $oArduinoConf->run();
-    }
-           
-    if($_GET["method"] === "notifications")
-    {
-        $oNotifications = new Notifications_GET($oConnection, $_GET);
-        $oNotifications->run();
-    }
-           
-    if($_GET["method"] === "component_status")
-    {
-        $ComponentStatus = new ComponentStatus_GET($oConnection, $_GET);
-        $ComponentStatus->run();
-    }
-    
-    if($_GET["method"] === "sensor_data")
+    // It it's not an api call, return main.html if the uri is index.php
+    $apiRegex = "/^" . preg_quote("api/", "/") . "/";
+    if(preg_match($apiRegex, $uri) === 0)
     {
         
-    
-        $oSerialTable = new SerialTable($oConnection);
-        $aMoisturePoll = $oSerialTable->getMoisturePoll();
-        $aPhotoPoll = $oSerialTable->getPhotoresistorPoll();
-        $aTempPoll = $oSerialTable->getTempPoll();
-
-        if($aMoisturePoll && $aPhotoPoll && $aTempPoll){
-
-            echo json_encode(array(
-                "moisture" => $aMoisturePoll,
-                "photoresistor" => $aPhotoPoll,
-                "temp" => $aTempPoll
-            ));
-
-//            echo file_get_contents("http://45.79.167.160//index.php?method=sensor_data");
+        if(empty($uri) || strtolower($uri) == "index.php") {
+            readfile('html/main.html');
         }
         else 
         {
-            echo 500;
+            http_response_code(404);
         }
+        
+        return;
     }
-}
-else
-{
-    readfile('html/main.html');
-}
-
+    
+    // If the service doesnt exist, then its a 404
+    $class = preg_replace($apiRegex, "", $uri);
+    if(!class_exists($class))
+    {
+        http_response_code(404);
+        return;
+    }
+    
+    // Assemble all the input
+    $post = json_decode(file_get_contents('php://input'),true);
+    $input = array_merge_recursive( 
+            !empty($post) ? $post : array(), 
+            !empty($_GET) ? $_GET : array());
+    
+    // Run the service
+    $service = new $class($_SERVER["REQUEST_METHOD"], $input);
+    $service->run();
