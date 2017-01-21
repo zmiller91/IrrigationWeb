@@ -8,9 +8,10 @@
 
 
 define('DOMAIN', 'localhost'); 
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/Irrigation/');
+define('ROOT_PATH', $_SERVER['ROOT_DIR'].'website/');
 define('DB_HOST', 'localhost');
-define('DB_USER', 'ima_user');
-define('DB_PASSWD', 'fotbaltym9'); 
-define('DB_IRRIGATION', 'irrigation');
-define('AUTOLOAD_CACHE_PATH', ROOT_PATH . "cache/classpaths.cache");
+define('DB_USER', 'user');
+define('DB_PASSWD', 'password'); 
+define('DB_NAME', 'name');
+define('CACHE_DIR', ROOT_PATH . "cache");
+define('AUTOLOAD_CACHE_PATH', CACHE_DIR . "/classpaths.cache");

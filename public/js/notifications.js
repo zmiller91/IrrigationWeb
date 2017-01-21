@@ -1,4 +1,4 @@
-define(['constants', 'priority_queue'], function() {
+define(['constants', '../lib/js-common/PriorityQueue'], function() {
     return {
         init: function(app) {
             app.controller("NotificationsCtrl", function ($scope, NotificationsData) {
