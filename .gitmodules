@@ -22,3 +22,6 @@
 [submodule "public/lib/angular-chart"]
 	path = public/lib/angular-chart
 	url = https://github.com/jtblin/angular-chart.js.git
+[submodule "public/lib/js-common"]
+	path = public/lib/js-common
+	url = https://github.com/zmiller91/js-common
