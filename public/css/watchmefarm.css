@@ -9,32 +9,48 @@
     padding-bottom: 6px;
 }
 
+#activities .well,
 #components .well {
     margin-bottom: 0px;
 }
 
-#components .name {
+#activities .text,
+#components .text {
     padding-top: 4px;
 }
 
+#activities label,
 #components label {
     font-weight: normal;
 }
 
-#components .save {
-    margin-bottom: 5px;
-}
-
+#activities form a,
 #components form a {
     opacity: .65;
 } 
 
+#activities fieldset[disabled="disabled"] form a,
 #components fieldset[disabled="disabled"] form a {
     opacity: .25;
     background: gray;
     border-color: gray;
 } 
 
+#activities fieldset[disabled="disabled"] i.chevron-down {
+    opacity: .25;
+    color: gray;
+}
+
+#activities .panel-footer,
 #components .panel-footer {
     text-align: right;
 } 
+
+.activity-modal label {
+    margin-top: 7px;
+}
+
+.activity-modal .form-group {
+    margin-bottom: 5px;
+    padding-right: 15px;
+}
