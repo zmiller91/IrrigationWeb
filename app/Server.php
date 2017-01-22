@@ -15,3 +15,6 @@ define('DB_PASSWD', 'password');
 define('DB_NAME', 'name');
 define('CACHE_DIR', ROOT_PATH . "cache");
 define('AUTOLOAD_CACHE_PATH', CACHE_DIR . "/classpaths.cache");
+
+define('PYTHON', "python executable");
+define('RMQSEND', "root\watchmefarm-pi\RMQSend.py");
