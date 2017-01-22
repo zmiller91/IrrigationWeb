@@ -3,6 +3,7 @@ define([], function() {
         init: function(app) {
             app.controller("ComponentsCtrl", function ($scope, ComponentStatusData) {
 
+                $scope.loading = false;
                 $scope.enabled = false;
                 $scope.components = [];
                 
@@ -15,14 +16,25 @@ define([], function() {
                 }
                 
                 $scope.save = function(){
-                    $scope.enabled = false;
-                    ComponentStatusData.put(null, null, $scope.components);
+                    $scope.loading = true;
+                    ComponentStatusData.put($scope.components, 
+                        function() {
+                            $scope.enabled = false;
+                            $scope.loading = false;
+                        }, 
+                        function() {
+                            $scope.loading = false;
+                    });
                 }
                 
                 angular.element(document).ready(function() {
+                    $scope.loading = true;
                     ComponentStatusData.get(function(data){
                         $scope.components = data;
-                    }, function(){});
+                        $scope.loading = false;
+                    }, function(){
+                        $scope.loading = false;
+                    });
                 });
 
             })
@@ -37,58 +49,30 @@ define([], function() {
                 this.response = {};
                 this.data = {};
                 
-                this.put = function(success, error, data) {
-                    console.log(data);
+                this.put = function(data, success, error) {
+                    $http.put('api/components', data)
+                        .then(function(response) {
+                            if (success) {
+                                success(response);
+                            }
+                        }, function(response) {
+                            if (error) {
+                                error(response);
+                            }
+                        }
+                    );
                 }
                 
                 this.get =  function(success,error) {
-                    
-                    var data = [{
-                        "id": "1001",
-                        "name": "Food pump",
-                        "arduino_id": "2",
-                        "process": "1001",
-                        "type": "1",
-                        "state": "auto",
-                        "date": null
-                    }, {
-                        "id": "1005",
-                        "name": "Water Valve",
-                        "arduino_id": "2",
-                        "process": "1005",
-                        "type": "1",
-                        "state": "auto",
-                        "date": null
-                    }, {
-                        "id": "1006",
-                        "name": "Light",
-                        "arduino_id": "2",
-                        "process": "1006",
-                        "type": "1",
-                        "state": "off",
-                        "date": null
-                    }, {
-                        "id": "1007",
-                        "name": "Intake Fan",
-                        "arduino_id": "2",
-                        "process": "1007",
-                        "type": "1",
-                        "state": "on",
-                        "date": null
-                    }]
-                    
-                    success(data);
-                    
-                    
-//                    $http.get('index.php', {params:{method: "component_status"}})
-//                        .then(function(response) {
-//                            this.response = response;
-//                            this.data = response.data;
-//                            success(this.data);
-//                        }, function(response) {
-//                            error(response);
-//                        }
-//                    );
+                    $http.get('api/components')
+                        .then(function(response) {
+                            this.response = response;
+                            this.data = response.data;
+                            success(this.data);
+                        }, function(response) {
+                            error(response);
+                        }
+                    );
                 };
             }]);
         }

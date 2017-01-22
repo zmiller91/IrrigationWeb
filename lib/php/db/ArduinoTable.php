@@ -43,16 +43,17 @@ EOD
         return $mSuccess ? $this->m_aArduino[0] : false;
     }
     
-    public function put($iArduinoId, $oConfiguration)
-    {
-        $conf = json_encode($oConfiguration);
-        return $this->execute(
+    public function getConstants(array $constatns) {
+        
+        $haystack = implode(",", $constatns);
+        
+        $sql = 
 <<<EOD
-            UPDATE arduino
-            SET conf = '$conf',
-            modified_date = NOW()
-            WHERE id = $iArduinoId;
-EOD
-        );
+        SELECT * 
+        FROM arduino_constants
+        WHERE id in ($haystack);
+EOD;
+        return $this->map($this->execute($sql), array("id"));
     }
+
 }

@@ -13,12 +13,6 @@
 [submodule "public/lib/sbadmin2"]
 	path = public/lib/sbadmin2
 	url = https://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git
-[submodule "public/lib/angularchart"]
-	path = public/lib/angularchart
-	url = https://github.com/jtblin/angular-chart-js.git
-[submodule "public/lib/--force"]
-	path = public/lib/--force
-	url = https://github.com/jtblin/angular-chart-js.git
 [submodule "public/lib/angular-chart"]
 	path = public/lib/angular-chart
 	url = https://github.com/jtblin/angular-chart.js.git

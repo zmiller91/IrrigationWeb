@@ -2,29 +2,6 @@
 CREATE DATABASE irrigation;
 USE irrigation;
 
-
-create table user(
-    id int not null auto_increment,
-    username varchar(256),
-    password varchar(256),
-    created_date datetime,
-    primary key (id),
-    unique(username)
-);
-
-create table user_sessions(
-    id int not null auto_increment,
-    user int,
-    token varchar(256),
-    expiration datetime,
-    persist tinyint,
-    primary key (id),
-    foreign key (user) references user(id),
-    index (id, user),
-    created_date datetime,
-    updated_date datetime
-);
-
 CREATE TABLE arduino (
     id int not null auto_increment,
     user_id int,
@@ -56,26 +33,33 @@ CREATE TABLE serial(
     index `process_type` (arduino_id, process, type, date)
 );
 
-CREATE TABLE arduino_conf(
-    arduino_id int not null,
-    conf blob
+CREATE TABLE grow
+(
+	id int not null auto_increment,
+    user_id int(11),
+    arduino_id int(11),
+    name varchar(256),
+    active tinyint,
+    created_date timestamp,
     
-    primary key(arduino_id)
+    primary key(id),
+    foreign key(user_id) references user(id),
+    foreign key(arduino_id) references arduino(id),
+    index `user` (user_id, arduino_id)
 );
 
-CREATE TABLE changelog(
-    id int not null auto_increment,
-    arduino_id int,
-    arduino_const int,
-    value int,
-    start_date date,
-    end_date date,
-    primary key(id),
-    foreign key(arduino_id) references arduino(id),
+
+CREATE TABLE overrides
+(
+    grow_id int(11),
+    component int(11),
+    value varchar(10),
+    modified_date timestamp,
+    
+    primary key(grow_id, component),
+    foreign key(grow_id) references grow(id),
     foreign key(component) references arduino_constants(id),
-    foreign key(state) references arduino_constants(id),
-    index `component` (arduino_id, component, start_date),
-    index `state` (arduino_id, component, state, start_date)
+    index `grow` (grow_id)
 );
 
 INSERT INTO arduino_constants (name, id) VALUES("ON_OFF", 1);
@@ -95,14 +79,3 @@ INSERT INTO arduino_constants (name, id) VALUES("MOISTURE_SENSOR_ID", 3000);
 INSERT INTO arduino_constants (name, id) VALUES("PHOTORESISTOR_ID", 3001);
 INSERT INTO arduino_constants (name, id) VALUES("TEMP_SENSOR_ID", 3002);
 INSERT INTO arduino_constants (name, id) VALUES("MEM_USAGE_ID", 4000);
-
-
-INSERT INTO user
-(username, password, created_date)
-VALUES
-("zmiller", "password", NOW());
-
-INSERT INTO arduino
-(user_id)
-VALUES
-(last_insert_id());

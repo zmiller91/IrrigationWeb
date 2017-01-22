@@ -2,19 +2,20 @@
     <div class="panel-heading">
         <i class="fa fa-cogs fa-fw"></i>
         Components
+        <i ng-show="loading" class="pull-right fa fa-spinner fa-spin fa-fw"></i>
     </div>
     <div class="panel-body">
         <fieldset ng-disabled="!enabled">
             <div class="list-group-item" ng-repeat="component in components"> 
 
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <div class="name">
                             {{component.name}}
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-7">
                         <div class="switch-toggle well">
                             <form>
                                 
