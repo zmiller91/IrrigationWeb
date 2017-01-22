@@ -19,14 +19,15 @@ define([], function() {
                 
                 $scope.save = function(){
                     $scope.loading = true;
-                    ComponentStatusData.put($scope.components, 
+                    ComponentStatusData.put($scope.componentEdits, 
                         function() {
                             $scope.enabled = false;
                             $scope.loading = false;
-                            $scope.components = clonecomponent($scope.componentEdits);
+                            $scope.components = cloneComponent($scope.componentEdits);
                         }, 
                         function() {
                             $scope.loading = false;
+                            $scope.componentEdits = cloneComponent($scope.components);
                     });
                 }
                 
