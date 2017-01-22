@@ -1,3 +1,24 @@
-[submodule "lib/php/comoon"]
+[submodule "lib/php/common"]
 	path = lib/php/common
 	url = https://github.com/zmiller91/php-common
+[submodule "public/lib/ChartJS"]
+	path = public/lib/ChartJS
+	url = https://github.com/chartjs/Chart.js.git
+[submodule "public/lib/requirejs"]
+	path = public/lib/requirejs
+	url = https://github.com/requirejs/requirejs.git
+[submodule "public/lib/bentorfs-multiselect"]
+	path = public/lib/bentorfs-multiselect
+	url = https://github.com/bentorfs/angular-bootstrap-multiselect.git
+[submodule "public/lib/sbadmin2"]
+	path = public/lib/sbadmin2
+	url = https://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git
+[submodule "public/lib/angularchart"]
+	path = public/lib/angularchart
+	url = https://github.com/jtblin/angular-chart-js.git
+[submodule "public/lib/--force"]
+	path = public/lib/--force
+	url = https://github.com/jtblin/angular-chart-js.git
+[submodule "public/lib/angular-chart"]
+	path = public/lib/angular-chart
+	url = https://github.com/jtblin/angular-chart.js.git

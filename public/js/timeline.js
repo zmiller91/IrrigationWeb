@@ -54,27 +54,27 @@ define([], function() {
                         line = $scope.timeline[line];
 
                         if(line.type === 1) {
-                            var img = new Image();
-                            img.src = line.image;
-
-                            var canvas = document.getElementById(line.id.toString());
-                            var ctx = canvas.getContext("2d");
-
-                            canvas.height = canvas.width * (img.height / img.width);
-
-                            /// step 1
-                            var oc = document.createElement('canvas'),
-                                octx = oc.getContext('2d');
-
-                            oc.width = img.width * 0.5;
-                            oc.height = img.height * 0.5;
-                            octx.drawImage(img, 0, 0, oc.width, oc.height);
-
-                            /// step 2
-                            octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-
-                            ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5,
-                            0, 0, canvas.width, canvas.height);
+//                            var img = new Image();
+//                            img.src = line.image;
+//
+//                            var canvas = document.getElementById(line.id.toString());
+//                            var ctx = canvas.getContext("2d");
+//
+//                            canvas.height = canvas.width * (img.height / img.width);
+//
+//                            /// step 1
+//                            var oc = document.createElement('canvas'),
+//                                octx = oc.getContext('2d');
+//
+//                            oc.width = img.width * 0.5;
+//                            oc.height = img.height * 0.5;
+//                            octx.drawImage(img, 0, 0, oc.width, oc.height);
+//
+//                            /// step 2
+//                            octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
+//
+//                            ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5,
+//                            0, 0, canvas.width, canvas.height);
                         }
                     }
                 });

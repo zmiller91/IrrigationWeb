@@ -1,5 +1,5 @@
 define([
-    '../user/user',
+    '../lib/js-common/user/user',
     'charts',
     'notifications',
     'components',

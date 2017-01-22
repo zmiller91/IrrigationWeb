@@ -1,4 +1,4 @@
-define(["../user/user"], function(user) {
+define(["../lib/js-common/user/user"], function(user) {
     
     return {
         init: function(app) {
