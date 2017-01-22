@@ -6,6 +6,7 @@ define([], function() {
                 $scope.loading = false;
                 $scope.enabled = false;
                 $scope.components = [];
+                $scope.componentEdits = [];
                 
                 $scope.edit = function() {
                     $scope.enabled = true;
@@ -13,6 +14,7 @@ define([], function() {
                 
                 $scope.cancel = function() {
                     $scope.enabled = false;
+                    $scope.componentEdits = cloneComponent($scope.components);
                 }
                 
                 $scope.save = function(){
@@ -21,16 +23,30 @@ define([], function() {
                         function() {
                             $scope.enabled = false;
                             $scope.loading = false;
+                            $scope.components = clonecomponent($scope.componentEdits);
                         }, 
                         function() {
                             $scope.loading = false;
                     });
                 }
                 
+                var cloneComponent = function(component) {
+                    var clone = [];
+                    for (var c in component){ 
+                        var obj = {}
+                        obj.id = component[c].id;
+                        obj.name = component[c].name;
+                        obj.state = component[c].state;
+                        clone.push(obj);
+                    }
+                    return clone;
+                }
+                
                 angular.element(document).ready(function() {
                     $scope.loading = true;
                     ComponentStatusData.get(function(data){
                         $scope.components = data;
+                        $scope.componentEdits = cloneComponent($scope.components);
                         $scope.loading = false;
                     }, function(){
                         $scope.loading = false;

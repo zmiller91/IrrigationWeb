@@ -6,11 +6,20 @@
     </div>
     <div class="panel-body">
         <fieldset ng-disabled="!enabled">
-            <div class="list-group-item" ng-repeat="component in components"> 
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-7">
+                    <div class="col-sm-4">Off</div>
+                    <div class="col-sm-4">Auto</div>
+                    <div class="col-sm-4">On</div>
+                </div>
+            </div>
+            
+            <div class="list-group-item" ng-repeat="component in componentEdits"> 
 
                 <div class="row">
                     <div class="col-sm-5">
-                        <div class="name">
+                        <div class="text">
                             {{component.name}}
                         </div>
                     </div>
@@ -23,20 +32,20 @@
                                        name="{{ component.id + '-state-d'}}" type="radio" 
                                        value="off" ng-model="component.state">
                                 
-                                <label for="{{component.id + '-off'}}" onclick="">Off</label>
+                                <label for="{{component.id + '-off'}}" onclick="">&nbsp;</label>
 
                                 <input id="{{component.id + '-na'}}" 
                                        name="{{ component.id + '-state-d'}}" 
                                        type="radio" value="auto" checked="checked" 
                                        ng-model="component.state">
                                 
-                                <label for="{{component.id + '-na'}}" onclick="">Auto</label>
+                                <label for="{{component.id + '-na'}}" onclick="">&nbsp;</label>
 
                                 <input id="{{component.id + '-on'}}" 
                                        name="{{ component.id + '-state-d'}}" type="radio" 
                                        value="on" ng-model="component.state">
                                 
-                                <label for="{{component.id + '-on'}}" onclick="">On</label>
+                                <label for="{{component.id + '-on'}}" onclick="">&nbsp;</label>
 
                                 <a class="btn btn-primary"></a>
                                 
