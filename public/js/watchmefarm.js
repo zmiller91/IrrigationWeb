@@ -5,6 +5,7 @@ define([
     'components',
     'activities',
     'timeline',
+    'functions',
 ],
 
   function(user, charts, notifications, components, activities, timeline){
