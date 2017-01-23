@@ -34,17 +34,12 @@ class Components extends Service{
                 strtolower($current[$row["id"]]["value"]) == strtolower($row["state"]))) {
                 
                 $s = strtolower($row["state"]);
-                
                 $on = $s == "on";
                 $off = $s == "off";
                 $state = $on ? "1" : ($off ? "0" : "-1");
                 $id = $row["id"];
                 $action = ArduinoConstants::OVERRIDE_ON_OFF;
-                $args = implode(" ", array($id, $action, $state));
-                $cmd = implode(" ", array(PYTHON, RMQSEND, $args));
-                
-                $command = escapeshellcmd($cmd);
-                $output = shell_exec($command);
+                RMQConnection::send($id, $action, $state);
                 $OverridesTable->put($row);
             }
         }
