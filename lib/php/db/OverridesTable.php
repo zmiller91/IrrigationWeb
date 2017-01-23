@@ -9,12 +9,17 @@ class OverridesTable extends BaseTable{
         parent::__construct($oConnection);
     }
     
-    public function select($growId) {
+    public function select($growId, $components = null) {
+        
+        $extra = empty($components) ? "" :
+                "AND component IN (".implode(",", $components).")";
+        
         $sql = 
 <<<EOD
         SELECT * 
         FROM overrides
-        WHERE grow_id = $growId; 
+        WHERE grow_id = $growId
+        $extra; 
 EOD;
         
         return $this->map($this->execute($sql), array("component"));
