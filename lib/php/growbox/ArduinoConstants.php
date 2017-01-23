@@ -33,9 +33,10 @@ class ArduinoConstants {
     const HEATER_ID = 1009;
 
     // Action IDs. All action IDs start with 2000
-    const  POLL_ID = 2000;
+    const POLL_ID = 2000;
     const IRRIGATE_ID = 2001;
     const ILLUMINATE_ID = 2002;
+    const HVAC_ID = 2003;
 
     // Sensor IDs. All sensor IDs start with 3000
     const MOISTURE_SENSOR_ID = 3000;
