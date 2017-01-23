@@ -2,15 +2,22 @@
     <div class="col-sm-2">
         Day:
     </div>
-    <div class="col-sm-4">
-        {{Math.round($parent.activities.light.configuration[5002] / 60)}}H 
-        {{$parent.activities.light.configuration[5002] % 60}}M
+    
+    <div class="col-sm-4" ng-show="$parent.activities.light.configuration[5002]['value']">
+        {{Math.round($parent.activities.light.configuration[5002]["value"] / 60)}}H 
+        {{parseInt($parent.activities.light.configuration[5002]["value"] % 60)}}M
     </div>
+    
+    <div class="col-sm-4" ng-show="!$parent.activities.light.configuration[5002]['value']"></div>
+    
     <div class="col-sm-2">
         Night:
     </div>
-    <div class="col-sm-4">
-        {{Math.round($parent.activities.light.configuration[5003] / 60)}}H 
-        {{$parent.activities.light.configuration[5003] % 60}}M
+    
+    <div class="col-sm-4" ng-show="$parent.activities.light.configuration[5003]['value']">
+        {{Math.round($parent.activities.light.configuration[5003]["value"] / 60)}}H 
+        {{parseInt($parent.activities.light.configuration[5003]["value"] % 60)}}M
     </div>
+    
+    <div class="col-sm-4" ng-show="!$parent.activities.light.configuration[5003]['value']"></div>
 </div>

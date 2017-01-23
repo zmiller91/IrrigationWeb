@@ -1,0 +1,51 @@
+<div id="components" class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-cogs fa-fw"></i>
+        Components
+        <i ng-show="loading" class="pull-right fa fa-spinner fa-spin fa-fw"></i>
+    </div>
+    <div class="panel-body row">
+        <fieldset ng-disabled="!enabled">
+            
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-7">
+                        <div class="col-sm-4">OFF</div>
+                        <div class="col-sm-4">AUTO</div>
+                        <div class="col-sm-4">ON</div>
+                    </div>
+                </div>
+
+                <div class="list-group-item" 
+                     ng-repeat="component in componentEdits.slice(0, componentEdits.length / 2)"> 
+                    <div component-row></div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-7">
+                        <div class="col-sm-4">OFF</div>
+                        <div class="col-sm-4">AUTO</div>
+                        <div class="col-sm-4">ON</div>
+                    </div>
+                </div>
+
+                <div class="list-group-item" 
+                     ng-repeat="component in componentEdits.slice(componentEdits.length / 2, componentEdits.length)"> 
+                    <div component-row></div>
+                </div>
+            </div>
+            
+            
+            
+        </fieldset>
+    </div>
+    <div class="panel-footer">
+        <button ng-show="enabled" type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+        <button ng-show="enabled" type="button" class="btn btn-primary" ng-click="save()">Save</button>
+        <button ng-show="!enabled" type="button" class="btn btn-primary" ng-click="edit()">Edit</button>
+    </div>
+</div>

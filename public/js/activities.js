@@ -47,6 +47,10 @@ define([], function() {
                     });
                 };
                 
+                $scope.parseInt = function(val){
+                    return parseInt(val);
+                }
+                
                 angular.element(document).ready(function() {
                     $scope.loading = true;
                     ActivityService.get(null, function(data){
