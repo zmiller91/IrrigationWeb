@@ -14,7 +14,7 @@ define([], function() {
                 
                 $scope.cancel = function() {
                     $scope.enabled = false;
-                    $scope.componentEdits = cloneComponent($scope.components);
+                    $scope.componentEdits = clone($scope.components);
                 }
                 
                 $scope.save = function(){
@@ -23,31 +23,19 @@ define([], function() {
                         function() {
                             $scope.enabled = false;
                             $scope.loading = false;
-                            $scope.components = cloneComponent($scope.componentEdits);
+                            $scope.components = clone($scope.componentEdits);
                         }, 
                         function() {
                             $scope.loading = false;
-                            $scope.componentEdits = cloneComponent($scope.components);
+                            $scope.componentEdits = clone($scope.components);
                     });
-                }
-                
-                var cloneComponent = function(component) {
-                    var clone = [];
-                    for (var c in component){ 
-                        var obj = {}
-                        obj.id = component[c].id;
-                        obj.name = component[c].name;
-                        obj.state = component[c].state;
-                        clone.push(obj);
-                    }
-                    return clone;
                 }
                 
                 angular.element(document).ready(function() {
                     $scope.loading = true;
                     ComponentStatusData.get(function(data){
                         $scope.components = data;
-                        $scope.componentEdits = cloneComponent($scope.components);
+                        $scope.componentEdits = clone($scope.components);
                         $scope.loading = false;
                     }, function(){
                         $scope.loading = false;
@@ -58,11 +46,11 @@ define([], function() {
 
             .directive("componentStatus", function() {
               return {
-                templateUrl: 'html/component-status.html'
+                templateUrl: 'html/components.html'
               };
             })
 
-            .service('ComponentStatusData', ['$rootScope', '$http', function($rootScope, $http) {
+            .service('ComponentStatusData', ['$http', function($http) {
                 this.response = {};
                 this.data = {};
                 
