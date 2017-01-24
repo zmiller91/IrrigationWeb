@@ -4,14 +4,14 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
             app.controller("NotificationsCtrl", function ($scope, NotificationsData) {
                 
                 $scope.options = [
-                    {id: PUMP_ID, name: 'Water Pump'},
-                    {id: PERI_PUMP_ID, name: 'Food Pump'},
-                    {id: MIXER_ID, name: 'Water Mixer'},
-                    {id: PHDOWN_ID, name: 'pH Down'},
-                    {id: PHUP_ID, name: 'pH Up'},
-                    {id: SOLENOID_ID, name: 'Water Valve'},
-                    {id: LIGHT_ID, name: 'Light'},
-                    {id: FAN_ID, name: 'Intake Fan'}
+//                    {id: PUMP_ID, name: 'Water Pump'},
+//                    {id: PERI_PUMP_ID, name: 'Food Pump'},
+//                    {id: MIXER_ID, name: 'Water Mixer'},
+//                    {id: PHDOWN_ID, name: 'pH Down'},
+//                    {id: PHUP_ID, name: 'pH Up'},
+//                    {id: SOLENOID_ID, name: 'Water Valve'},
+//                    {id: LIGHT_ID, name: 'Light'},
+//                    {id: FAN_ID, name: 'Intake Fan'}
                 ];
                 $scope.selection = $scope.options.slice();
                 
