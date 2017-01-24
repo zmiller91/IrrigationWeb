@@ -3,12 +3,20 @@
         Min Temp:
     </div>
     <div class="col-sm-2">
-        {{parseInt($parent.activities.hvac.configuration[5000]["value"])}}&deg;F
+        {{
+            $parent.activities.hvac.configuration[5000]["value"] ?
+                parseInt($parent.activities.hvac.configuration[5000]["value"]) + '&deg;F' : "N/A";
+        
+        }}
     </div>
     <div class="col-sm-4">
         Max Temp:
     </div>
     <div class="col-sm-2">
-        {{parseInt($parent.activities.hvac.configuration[5001]["value"])}}&deg;F
+        {{
+            $parent.activities.hvac.configuration[5001]["value"] ?
+            parseInt($parent.activities.hvac.configuration[5001]["value"]) + '&deg;F' : "N/A";
+        
+        }}
     </div>
 </div>

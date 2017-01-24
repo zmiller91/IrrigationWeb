@@ -3,6 +3,9 @@
         Minimum Moisture Density: 
     </div>
     <div class="col-sm-4">
-        {{parseInt($parent.activities.irrigation.configuration[5000]["value"])}}%
+        {{
+            $parent.activities.irrigation.configuration[5000]["value"] ? 
+            parseInt($parent.activities.irrigation.configuration[5000]["value"]) + '%' : "N/A"
+        }}
     </div>
 </div>
