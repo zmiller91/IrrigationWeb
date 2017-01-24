@@ -9,7 +9,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Day Duration</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.configuration[5002]['value']">
+                   ng-model="activity.configuration[5002]['value']"
+                   ng-init="activity.configuration[5002]['scale'] = 60000">
             <div class="input-group-addon">mins</div>
           </div>
         </div>
@@ -17,7 +18,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Night Duration</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.configuration[5003]['value']">
+                   ng-model="activity.configuration[5003]['value']"
+                   ng-init="activity.configuration[5003]['scale'] = 60000">
             <div class="input-group-addon">mins</div>
           </div>
         </div>

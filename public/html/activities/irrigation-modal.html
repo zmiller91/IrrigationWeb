@@ -9,7 +9,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Min. Density</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text" 
-                   ng-model="activity.configuration[5000]['value']">
+                   ng-model="activity.configuration[5000]['value']"
+                   ng-init="activity.configuration[5000]['scale'] = 1024/100">
             <div class="input-group-addon">%</div>
           </div>
         </div>
@@ -20,7 +21,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Water Amount</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.components[1001]['value']">
+                   ng-model="activity.components[1001]['value']"
+                   ng-init="activity.components[1001]['scale'] = 0.602">
             <div class="input-group-addon">gal</div>
           </div>
         </div>
@@ -28,7 +30,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Dosing Pump 1</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.components[1002]['value']">
+                   ng-model="activity.components[1002]['value']"
+                   ng-init="activity.components[1002]['scale'] = 0.602">
             <div class="input-group-addon">mL</div>
           </div>
         </div>
@@ -36,7 +39,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Dosing Pump 2</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.components[1003]['value']">
+                   ng-model="activity.components[1003]['value']"
+                   ng-init="activity.components[1003]['scale'] = 0.602">
             <div class="input-group-addon">mL</div>
           </div>
         </div>
@@ -44,7 +48,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Dosing Pump 3</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.components[1004]['value']">
+                   ng-model="activity.components[1004]['value']"
+                   ng-init="activity.components[1004]['scale'] = 0.602">
             <div class="input-group-addon">mL</div>
           </div>
         </div>
@@ -52,7 +57,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Dosing Pump 4</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.components[1005]['value']">
+                   ng-model="activity.components[1005]['value']"
+                   ng-init="activity.components[1005]['scale'] = 0.602">
             <div class="input-group-addon">mL</div>
           </div>
         </div>

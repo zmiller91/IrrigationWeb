@@ -9,7 +9,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Max. Temp.</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text" 
-                   ng-model="activity.configuration[5001]['value']">
+                   ng-model="activity.configuration[5001]['value']"
+                   ng-init="activity.configuration[5001]['scale'] = 10">
             <div class="input-group-addon">&deg;F</div>
           </div>
         </div>
@@ -17,7 +18,8 @@
           <label for="example-text-input" class="col-sm-6 col-form-label">Min. Temp.</label>
           <div class="col-sm-6 input-group">
             <input class="form-control" type="text"
-                   ng-model="activity.configuration[5000]['value']">
+                   ng-model="activity.configuration[5000]['value']"
+                   ng-init="activity.configuration[5000]['scale'] = 10">
             <div class="input-group-addon">&deg;F</div>
           </div>
         </div>
