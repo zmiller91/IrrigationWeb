@@ -1,5 +1,5 @@
 // Components
-var RESEVIOR_PUMP_ID = 1000;
+var RESEVOIR_PUMP_ID = 1000;
 var WATER_PUMP_ID = 1001;
 var PP1_ID = 1002;
 var PP2_ID = 1003;
@@ -14,3 +14,6 @@ var HEATER_ID = 1009;
 var IRRIGATE_ID = 2001;
 var ILLUMINATE_ID = 2002;
 var HVAC_ID = 2003;
+
+// Conf
+var CONF_TIME_ON = 5002;

@@ -69,7 +69,7 @@ define([], function() {
                 }
                 
                 this.get =  function(success,error) {
-                    var components = [RESEVIOR_PUMP_ID, WATER_PUMP_ID, PP1_ID,
+                    var components = [RESEVOIR_PUMP_ID, WATER_PUMP_ID, PP1_ID,
                         PP2_ID, PP3_ID, PP4_ID, MIXER_ID, LIGHT_ID, FAN_ID, HEATER_ID];
                     
                     $http.get('api/overrides', {params: {'overrides[]': components}})
