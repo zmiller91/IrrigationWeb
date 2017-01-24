@@ -55,7 +55,7 @@ define([], function() {
                 this.data = {};
                 
                 this.put = function(data, success, error) {
-                    $http.put('api/components', data)
+                    $http.put('api/overrides', data)
                         .then(function(response) {
                             if (success) {
                                 success(response);
@@ -69,7 +69,10 @@ define([], function() {
                 }
                 
                 this.get =  function(success,error) {
-                    $http.get('api/components')
+                    var components = [RESEVIOR_PUMP_ID, WATER_PUMP_ID, PP1_ID,
+                        PP2_ID, PP3_ID, PP4_ID, MIXER_ID, LIGHT_ID, FAN_ID, HEATER_ID];
+                    
+                    $http.get('api/overrides', {params: {'overrides[]': components}})
                         .then(function(response) {
                             this.response = response;
                             this.data = response.data;

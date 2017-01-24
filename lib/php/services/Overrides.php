@@ -1,17 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of ComponentStatus_GET
- *
  * @author zmiller
  */
-class Components extends Service{
+class Overrides extends Service{
 
     protected function allowableMethods() {
         return array(self::GET, self::PUT);
@@ -53,13 +45,8 @@ class Components extends Service{
         
         // Get the components
         $ArduinoTable = new ArduinoTable($this->m_oConnection);
-        $components = $ArduinoTable->getConstants(
-            array(ArduinoConstants::LIGHT_ID, ArduinoConstants::FAN_ID, 
-            ArduinoConstants::HEATER_ID, ArduinoConstants::RESEVIOR_PUMP_ID, 
-            ArduinoConstants::WATER_PUMP_ID, ArduinoConstants::PP1_ID, 
-            ArduinoConstants::PP2_ID, ArduinoConstants::PP3_ID, ArduinoConstants::PP4_ID,
-                ArduinoConstants::MIXER_ID)
-        );
+        $components = $ArduinoTable->getConstants($this->m_aInput["overrides"]);
+        
         // Get any overrides
         $OverridesTable = new OverridesTable($this->m_oConnection);
         $overrides = $OverridesTable->select('1');
@@ -73,7 +60,7 @@ class Components extends Service{
             }
             
             $c["state"] = $state;
-            array_push($retval, $c);
+            $retval[$c["id"]] = $c;
         }
         
         $this->m_mData = $retval;
