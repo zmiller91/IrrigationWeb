@@ -22,18 +22,14 @@ class Overrides extends Service{
         $OverridesTable = new OverridesTable($this->m_oConnection);
         $current = $OverridesTable->select("1");
         foreach($this->m_aInput as $row) {
-            if(!(array_key_exists($row["id"], $current) && 
-                strtolower($current[$row["id"]]["value"]) == strtolower($row["state"]))) {
-                
-                $s = strtolower($row["state"]);
-                $on = $s == "on";
-                $off = $s == "off";
-                $state = $on ? "1" : ($off ? "0" : "-1");
-                $id = $row["id"];
-                $action = ArduinoConstants::OVERRIDE_ON_OFF;
-                RMQConnection::send($id, $action, $state);
-                $OverridesTable->put($row);
-            }
+            $s = strtolower($row["state"]);
+            $on = $s == "on";
+            $off = $s == "off";
+            $state = $on ? "1" : ($off ? "0" : "-1");
+            $id = $row["id"];
+            $action = ArduinoConstants::OVERRIDE_ON_OFF;
+            RMQConnection::send($id, $action, $state);
+            $OverridesTable->put($row);
         }
         
         return true;

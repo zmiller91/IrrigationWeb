@@ -30,9 +30,9 @@ class Configuration extends Service{
         $ConfigurationTable = new ConfigurationTable($this->m_oConnection);
         foreach($this->m_aInput as $conf) {
             $ConfigurationTable->put($conf);
-                $value = $conf["value"] * $conf["scale"];
-                $ConfigurationTable->put($conf);
-                RMQConnection::send($conf["component"], $conf["process"], $value);
+            $value = $conf["value"] * $conf["scale"];
+            $ConfigurationTable->put($conf);
+            RMQConnection::send($conf["component"], $conf["process"], $value);
         }
         
         return true;
