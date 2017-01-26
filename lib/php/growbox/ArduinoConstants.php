@@ -55,6 +55,7 @@ class ArduinoConstants {
     const OVERRIDE_ON_FOR = 5005;
     const OVERRIDE_OFF_FOR = 5006;
     const OVERRIDE_SET_ACTION = 5007;
+    const OVERRIDE_TOUCH = 5008;
 
     static function exists($value) {
         $oClass = new ReflectionClass(__CLASS__);

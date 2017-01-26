@@ -1,3 +1,7 @@
+.btn:focus {
+    outline: none;
+}
+
 .center-cropped {
   width: 530px;
   height: 530px;
@@ -53,4 +57,9 @@
 .activity-modal .form-group {
     margin-bottom: 5px;
     padding-right: 15px;
+}
+
+#touch-irrigation:focus {
+    outline: none;
+    background-color: #fff;
 }

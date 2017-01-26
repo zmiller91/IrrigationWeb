@@ -58,10 +58,14 @@ define([], function() {
             })
 
             .controller("ActivityConfCtrl",
-                ['$scope', '$uibModalInstance', 'activity', 
-                function ($scope, $uibModalInstance, activity){
+                ['$scope', '$uibModalInstance', 'activity', 'ActivityService',
+                function ($scope, $uibModalInstance, activity, ActivityService){
                     $scope.loading = false;
                     $scope.activity = activity;
+                    
+                    $scope.touch = function(component) {
+                        ActivityService.touch([component]);
+                    }
                     
                     $scope.apply = function(){
                         
@@ -116,6 +120,11 @@ define([], function() {
                 this.putRequests = 2;
                 this.putsFinished = 0;
                 
+                this.touch = function(components) {
+                    var data = {components: components};
+                    this.post('api/touch', data, null, null);
+                };
+                
                 this.save = function(data, onComplete) {
                     var $this = this;
                     var callback = function() {
@@ -167,6 +176,20 @@ define([], function() {
                     
                     return retval;
                 }
+                
+                this.post = function(url, data, success, error){
+                    $http.post(url, data)
+                        .then(function(response) {
+                            if (success) {
+                                success(response);
+                            }
+                        }, function(response) {
+                            if (error) {
+                                error(response);
+                            }
+                        }
+                    );
+                };
                 
                 this.put = function(url, data, success, error){
                     $http.put(url, data)
