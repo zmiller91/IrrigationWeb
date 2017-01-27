@@ -13,42 +13,40 @@
     padding-bottom: 6px;
 }
 
-#activities .well,
-#components .well {
+.wmf-modal .well {
     margin-bottom: 0px;
 }
 
-#activities .text,
-#components .text {
+.wmf-modal .text {
     padding-top: 4px;
 }
 
-#activities label,
-#components label {
+.wmf-modal label {
     font-weight: normal;
 }
 
-#activities form a,
-#components form a {
+.wmf-modal form a {
     opacity: .65;
 } 
 
-#activities fieldset[disabled="disabled"] form a,
-#components fieldset[disabled="disabled"] form a {
+.wmf-modal fieldset[disabled="disabled"] form a {
     opacity: .25;
     background: gray;
     border-color: gray;
 } 
 
-#activities fieldset[disabled="disabled"] i.chevron-down {
+.wmf-modal fieldset[disabled="disabled"] i.chevron-down {
     opacity: .25;
     color: gray;
 }
 
-#activities .panel-footer,
-#components .panel-footer {
+.wmf-modal .panel-footer {
     text-align: right;
 } 
+
+.wmf-modal .panel-footer textarea {
+    resize: none;
+}
 
 .activity-modal label {
     margin-top: 7px;
@@ -57,6 +55,18 @@
 .activity-modal .form-group {
     margin-bottom: 5px;
     padding-right: 15px;
+}
+
+.wmf-modal .panel-footer .form-group {
+    margin-bottom: 0px;
+}
+
+.wmf-modal .pane-footer .btn {
+    margin-top: 0px;
+}
+
+#timeline-panel .panel-footer .btn {
+    margin-top: 10px;
 }
 
 #touch-irrigation:focus {
