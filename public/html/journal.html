@@ -19,7 +19,10 @@
                            <li>
                               <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 
                                     {{ entry.date | date: "MMM dd, yyyy  hh:mm a" }}
-                                    <i class="pull-right fa fa-trash-o fa-fw"></i>
+                                    
+                                    <button type="button" class="btn btn-link" ng-click="delete(entry)">
+                                        <i class="pull-right fa fa-trash-o fa-fw"></i>
+                                    </button>
                                     <i class="pull-right fa fa-pencil fa-fw"></i>
                                   </small>
                               </p>

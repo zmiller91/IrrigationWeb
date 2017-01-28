@@ -27,4 +27,15 @@ EOD;
         
         return $this->execute($sql);
     }
+    
+    public function delete($growId, $recordId) {
+        $sql = 
+<<<EOD
+        DELETE FROM journal
+        WHERE grow_id = $growId
+        AND id = $recordId;
+EOD;
+        
+        return $this->execute($sql);
+    }
 }
