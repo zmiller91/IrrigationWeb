@@ -9,7 +9,7 @@ class JournalTable extends BaseTable {
         $sql = 
 <<<EOD
         INSERT INTO journal
-        (grow_id, text, date)
+        (grow_id, text, created_date)
         VALUES
         ($growId, "$m", NOW());
 EOD;
@@ -22,18 +22,33 @@ EOD;
 <<<EOD
         SELECT * FROM journal
         WHERE grow_id = $growId
-        ORDER BY date DESC;
+        ORDER BY created_date DESC;
 EOD;
         
         return $this->execute($sql);
     }
     
-    public function delete($growId, $recordId) {
+    public function delete($growId, $entryId) {
         $sql = 
 <<<EOD
         DELETE FROM journal
         WHERE grow_id = $growId
-        AND id = $recordId;
+        AND id = $entryId;
+EOD;
+        
+        return $this->execute($sql);
+    }
+    
+    public function update($growId, $entry) {
+        $entryId = $entry["id"];
+        $text = $this->escape($entry["text"]);
+        $sql = 
+<<<EOD
+        UPDATE journal
+        SET text = "$text",
+            edited_date = NOW()
+        WHERE grow_id = $growId
+        AND id = $entryId;
 EOD;
         
         return $this->execute($sql);

@@ -18,13 +18,23 @@ define([], function() {
                     });
                 }
                 
+                $scope.update = function(entry) {
+                    entry.loading = true;
+                    entry.text = entry.copy;
+                    JournalService.patch(entry, function(journal) {
+                        $scope.journal = formatJournal(journal);
+                    }, function(){
+                        entry.loading = false;
+                    });
+                }
+                
                 $scope.delete = function(entry) {
-                    $scope.loading = true;
+                    entry.loading = true;
                     JournalService.delete(entry, function(journal) {
                         $scope.journal = formatJournal(journal);
-                        $scope.loading = false;
+                        entry.loading = false;
                     }, function(){
-                        $scope.loading = false;
+                        entry.loading = false;
                     });
                 }
               
@@ -33,21 +43,31 @@ define([], function() {
                             return [];
                         }
                         
-                        journal[0]["show"] = true;
-                        journal[0]["date"] = new Date(journal[0]["date"]);
                         var i = 1;
+                        formatEntry(journal[0], true);
                         while( i < journal.length) {
-                            journal[i]["date"] = new Date(journal[i]["date"]);
-                            var last = journal[i - 1]["date"];
-                            var current = journal[i]["date"];
-                            journal[i]["show"] = !(last.getFullYear() === current.getFullYear() && 
+                            var last = journal[i - 1]["created_date"];
+                            var current = new Date(journal[i]["created_date"]);
+                            var show = !(last.getFullYear() === current.getFullYear() && 
                                 last.getMonth() === current.getMonth() && 
                                 last.getDate() === current.getDate());
+                        
+                            formatEntry(journal[i], show);
                             i++;
                         }
                         
                         return journal;
                 };
+                
+                var formatEntry = function(entry, show) {
+                        entry["show"] = show;
+                        entry["created_date"] = new Date(entry["created_date"]);
+                        entry["editing"] = false;
+                        entry["copy"] = entry.text;
+                        if(entry["edited_date"]) {
+                            entry["edited_date"] = new Date(entry["edited_date"]);
+                        }
+                }
                 
                 angular.element(document).ready(function() {
                     $scope.loading = true;
@@ -117,6 +137,20 @@ define([], function() {
                     );
                 };
                     
+                this.patch = function(entry, success, error) {
+                    $http.patch('api/journal', {record: entry})
+                        .then(function(response) {
+                            this.journal = response["data"];
+                            if (success) {
+                                success(this.journal);
+                            }
+                        }, function(response) {
+                            if (error) {
+                                error(response);
+                            }
+                        }
+                    );
+                };
             }]);
         }
     };

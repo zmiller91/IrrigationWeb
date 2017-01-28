@@ -44,7 +44,7 @@
     text-align: right;
 } 
 
-.wmf-modal .panel-footer textarea {
+.wmf-modal textarea {
     resize: none;
 }
 
@@ -63,6 +63,19 @@
 
 .wmf-modal .pane-footer .btn {
     margin-top: 0px;
+}
+
+#timeline .form-btn {
+    margin-top: 10px;
+}
+
+#timeline .form-group {
+    text-align: right;
+    margin-bottom: 0px;
+}
+
+#timeline .btn-link {
+    padding: 3px;
 }
 
 #timeline-panel .panel-footer .btn {

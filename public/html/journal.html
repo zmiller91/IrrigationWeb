@@ -8,8 +8,8 @@
       <div id="timeline">
          <div class="row timeline-movement" ng-repeat="entry in journal">
             <div class="timeline-badge" ng-show="entry.show">
-               <span class="timeline-balloon-date-day">{{ entry.date | date: "dd" }}</span>
-               <span class="timeline-balloon-date-month">{{ entry.date | date: "MMM" }}</span>
+               <span class="timeline-balloon-date-day">{{ entry.created_date | date: "dd" }}</span>
+               <span class="timeline-balloon-date-month">{{ entry.created_date | date: "MMM" }}</span>
             </div>
             <div class="col-sm-12  timeline-item">
                <div class="row">
@@ -17,20 +17,32 @@
                      <div class="timeline-panel debits">
                         <ul class="timeline-panel-ul">
                            <li>
-                              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 
-                                    {{ entry.date | date: "MMM dd, yyyy  hh:mm a" }}
-                                    
-                                    <button type="button" class="btn btn-link" ng-click="delete(entry)">
+                              <div>
+                                  <small class="text-muted"><i class="glyphicon glyphicon-time"></i> 
+                                    {{ entry.created_date | date: "MMM dd, yyyy  hh:mm a" }}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{ entry.edited_date && "Edited " + (entry.edited_date | date: "MMM dd") }}
+                                    <button type="button" class="pull-right btn btn-link" ng-click="delete(entry)">
                                         <i class="pull-right fa fa-trash-o fa-fw"></i>
                                     </button>
-                                    <i class="pull-right fa fa-pencil fa-fw"></i>
+                                    <button type="button" class="pull-right btn btn-link" ng-click="entry.editing = true">
+                                        <i class="pull-right fa fa-pencil fa-fw"></i>
+                                    </button>
                                   </small>
-                              </p>
+                                  <i ng-show="entry.loading" class="pull-right fa fa-spinner fa-spin fa-fw"></i>
+                              </div>
                            </li>
-                           <li>
+                           <li ng-show="!entry.editing">
                               <span class="causale">
                                   {{entry.text}}
                               </span> 
+                           </li>
+                           <li ng-show="entry.editing">
+                                <div class="form-group">
+                                  <textarea class="form-control" rows="5" ng-model="entry.copy"></textarea>
+                                  <button type="button" class="btn btn-default form-btn" ng-click="entry.editing = false; entry.copy = entry.text">Cancel</button>
+                                  <button type="button" class="btn btn-primary form-btn" ng-click="update(entry)">Submit</button>
+                                </div>
                            </li>
                         </ul>
                      </div>
