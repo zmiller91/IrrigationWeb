@@ -26,6 +26,18 @@ CREATE TABLE overrides
     index `grow` (grow_id)
 );
 
+CREATE TABLE journal
+(
+	id int not null auto_increment,
+	grow_id int(11),
+    text blob,
+    date datetime,
+    
+    primary key(id),
+    foreign key(grow_id) references grow(id),
+    index `grow` (grow_id)
+);
+
 CREATE TABLE configuration
 (
     grow_id int(11),
