@@ -31,7 +31,8 @@ CREATE TABLE journal
 	id int not null auto_increment,
 	grow_id int(11),
     text blob,
-    date datetime,
+    edited_date datetime,
+    created_date datetime,
     
     primary key(id),
     foreign key(grow_id) references grow(id),
