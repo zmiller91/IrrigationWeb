@@ -1,7 +1,7 @@
 define([], function() {
     return {
         init: function(app) {
-            app.controller("JournalCtrl", function ($scope, JournalService) {
+            app.controller("JournalCtrl", function ($scope, $uibModal, JournalService) {
 
                 $scope.journal = [];
                 $scope.newEntry = "";
@@ -29,14 +29,25 @@ define([], function() {
                 }
                 
                 $scope.delete = function(entry) {
-                    entry.loading = true;
-                    JournalService.delete(entry, function(journal) {
-                        $scope.journal = formatJournal(journal);
-                        entry.loading = false;
-                    }, function(){
-                        entry.loading = false;
-                    });
-                }
+                    $uibModal.open({
+                        templateUrl: "html/journal/delete-modal.html",
+                        controller: "DeleteJournalCtrl",
+                        size: 'sm'
+                    })
+                    .result.then(function(shouldDelete){
+                        if(!shouldDelete) {
+                            return;
+                        }
+
+                        entry.loading = true;
+                        JournalService.delete(entry, function(journal) {
+                            $scope.journal = formatJournal(journal);
+                            entry.loading = false;
+                        }, function(){
+                            entry.loading = false;
+                        });
+                    })
+                };
               
                 var formatJournal = function(journal) {
                         if(!journal.length) {
@@ -81,10 +92,16 @@ define([], function() {
                 });
 
             })
+            
+            app.controller("DeleteJournalCtrl", function ($scope, $uibModalInstance) {
+                $scope.return = function(shouldDelete) {
+                    $uibModalInstance.close(shouldDelete);
+                }
+            })
 
             .directive("journal", function() {
               return {
-                templateUrl: 'html/journal.html'
+                templateUrl: 'html/journal/journal.html'
               };
             })
             
