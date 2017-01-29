@@ -55,6 +55,20 @@ CREATE TABLE configuration
     index `grow` (grow_id)
 );
 
+CREATE TABLE polls 
+(
+    date datetime,
+	grow_id int(11),
+    sensor int(11),
+    reading int(11),
+    
+    primary key(date, grow_id, sensor),
+    foreign key(grow_id) references grow(id),
+    foreign key(sensor) references arduino_constants(id),
+    index `grow` (grow_id, sensor)
+
+);
+
 UPDATE arduino_constants
 set name = "Resevior Pump"
 where id = 1000;
@@ -109,3 +123,8 @@ INSERT INTO arduino_constants
 (id, name)
 VALUES
 (2003, "Climate Control");
+
+INSERT INTO arduino_constants
+(id, name)
+VALUES
+(3003, "Humidity Sensor");
