@@ -27,7 +27,7 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
                     data: {},
 
                     pageIndex: 0,
-                    pageLength: 5,
+                    pageLength: 10,
                     curPage: 0,
                     filteredResults: 0,
                     filtered: [],

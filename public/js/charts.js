@@ -4,7 +4,29 @@ define(["../lib/js-common/user/user"], function(user) {
         init: function(app) {
             user.init(app);
             
-            app.controller("ChartCtrl", function ($scope, ChartData) {
+            app.controller("ChartViewCtrl", function ($scope, $rootScope, ChartData) {
+                $scope.view = "";
+                $scope.chartData = {};
+                
+                $scope.select = function(view){
+                    $scope.view = view;
+                    $rootScope.$broadcast('chart-view-change', view);
+                }
+                
+                $scope.$on('chart-data-updated', function(event, data) {
+                    $scope.chartData = data;
+                });
+                
+                angular.element(document).ready(function() {
+                    ChartData.get(function(data){
+                        $scope.select('view-water');
+                    }, function(){});
+                });
+                
+                
+            })
+            
+            app.controller("ChartCtrl", function ($scope, $rootScope, ChartData) {
     
                 Chart.defaults.global.tooltips.enabled = false;
                 Chart.defaults.global.elements.point.radius = 0;
@@ -19,8 +41,13 @@ define(["../lib/js-common/user/user"], function(user) {
                 var dark_blue = '#949FB1';
                 var blue_gray = '#4D5360';
 
-                $scope.chartData = [];
+                $scope.loading = false;
                 $scope.view = "view-water";
+                $scope.chartData = [];
+                
+                $scope.$on('chart-view-change', function(event, view) {
+                    $scope.view = view;
+                });
 
                 function getBlankChart(name, color)
                 {
@@ -132,9 +159,6 @@ define(["../lib/js-common/user/user"], function(user) {
                                 this.addMA(data, "sum1", "num1", "count1", 1, 0, callback);
             //                    this.addMA(data, "sum5", "num5", "count5", 5, 1);
                             }, this);
-
-
-                            console.log(this.data);
                             this.vars.current = this.data[0][this.data[0].length - 1];
                         }
                     }
@@ -173,9 +197,14 @@ define(["../lib/js-common/user/user"], function(user) {
                 };
                 
                 angular.element(document).ready(function() {
+                    $scope.loading = true;
                     ChartData.get(function(data){
                         $scope.chartData = mapDataToChart(data);
-                    }, function(){});
+                        $rootScope.$broadcast('chart-data-updated', $scope.chartData);
+                        $scope.loading = false;
+                    }, function(){
+                        $scope.loading = false;
+                    });
                 });
             })
 
@@ -191,7 +220,7 @@ define(["../lib/js-common/user/user"], function(user) {
               };
             })
 
-            .service('ChartData', ['$rootScope', '$http', function($rootScope, $http) {
+            .service('ChartData', ['$http', function($http) {
                 this.response = {};
                 this.data = {};
                 

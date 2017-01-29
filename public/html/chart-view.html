@@ -1,11 +1,9 @@
-<div id="chart-view" class="row">
-    <div class="col-sm-12">
-        <div>
-
+<div id="chart-view">
             <div id="view-water" ng-show="view === 'view-water'">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i> Moisture Density
+                        <i ng-show="loading" class="pull-right fa fa-spinner fa-spin fa-fw"></i>
                     </div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="chartData.moisture.data"
@@ -21,6 +19,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i> Temperature
+                        <i ng-show="loading" class="pull-right fa fa-spinner fa-spin fa-fw"></i>
                     </div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="chartData.temp.data"
@@ -36,6 +35,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i> Light Density
+                        <i ng-show="loading" class="pull-right fa fa-spinner fa-spin fa-fw"></i>
                     </div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="chartData.light.data"
@@ -46,6 +46,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
