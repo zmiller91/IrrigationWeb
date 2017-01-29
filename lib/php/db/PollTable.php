@@ -8,11 +8,23 @@ class PollTable extends BaseTable{
         $sql = 
 <<<EOD
             INSERT INTO polls
-            (date, grow_id, sensor, reading)
+            (date, grow_id, sensor, value)
             VALUES
             (NOW(), $grow, $sensor, $value);
 EOD;
         
+        return $this->execute($sql);
+    }
+    
+    public function getPoll($grow, $sensor)
+    {
+        $sql = 
+<<<EOD
+        SELECT date, value 
+        FROM polls
+        WHERE grow_id = $grow
+        AND sensor = $sensor;
+EOD;
         return $this->execute($sql);
     }
     
