@@ -42,6 +42,7 @@ class ArduinoConstants {
     const MOISTURE_SENSOR_ID = 3000;
     const PHOTORESISTOR_ID = 3001;
     const TEMP_SENSOR_ID = 3002;
+    const HUMIDITY_SENSOR_ID = 3003;
 
     // Admin/Debug/Other IDs.  All these IDs start with 4000
     const MEM_USAGE_ID = 4000;		

@@ -189,7 +189,14 @@ define(["../lib/js-common/user/user"], function(user) {
                         return Math.round(ferenheit);
                     });
 
-                    return {moisture: moisture, temp: temp, light: light};
+                    var humidity = getBlankChart("Humidity", purple);
+                    humidity.options.scales.yAxes[0].ticks.beginAtZero = true;
+                    humidity.options.scales.yAxes[0].ticks.suggestedMax = 100;
+                    humidity.map(data.humidity, function(reading){
+                        return Math.round(reading / 1024 * 100)
+                    });
+
+                    return {moisture: moisture, temp: temp, light: light, humidity: humidity};
                 }
 
                 $scope.onClick = function (points, evt) {

@@ -32,6 +32,7 @@ class Poll extends Service{
             "moisture" => $PollTable->getPoll("1", ArduinoConstants::MOISTURE_SENSOR_ID),
             "photoresistor" => $PollTable->getPoll("1", ArduinoConstants::PHOTORESISTOR_ID),
             "temp" => $PollTable->getPoll("1", ArduinoConstants::TEMP_SENSOR_ID),
+            "humidity" => $PollTable->getPoll("1", ArduinoConstants::HUMIDITY_SENSOR_ID)
         );
         
         return true;
