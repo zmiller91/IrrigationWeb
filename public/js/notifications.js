@@ -2,17 +2,20 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
     return {
         init: function(app) {
             app.controller("NotificationsCtrl", function ($scope, NotificationsData) {
-                
+                $scope.loading = false;
                 $scope.options = [
-//                    {id: PUMP_ID, name: 'Water Pump'},
-//                    {id: PERI_PUMP_ID, name: 'Food Pump'},
-//                    {id: MIXER_ID, name: 'Water Mixer'},
-//                    {id: PHDOWN_ID, name: 'pH Down'},
-//                    {id: PHUP_ID, name: 'pH Up'},
-//                    {id: SOLENOID_ID, name: 'Water Valve'},
-//                    {id: LIGHT_ID, name: 'Light'},
-//                    {id: FAN_ID, name: 'Intake Fan'}
+                    {id: RESEVOIR_PUMP_ID, name: 'Resevior Pump'},
+                    {id: WATER_PUMP_ID, name: 'Water Pump'},
+                    {id: PP1_ID, name: 'Nutrient Pump 1'},
+                    {id: PP2_ID, name: 'Nutrient Pump 2'},
+                    {id: PP3_ID, name: 'Nutrient Pump 3'},
+                    {id: PP4_ID, name: 'Nutrient Pump 4'},
+                    {id: MIXER_ID, name: 'Nutrient Mixer'},
+                    {id: LIGHT_ID, name: 'Light'},
+                    {id: FAN_ID, name: 'Exhaust Fan'},
+                    {id: HEATER_ID, name: 'Heater'}
                 ];
+                
                 $scope.selection = $scope.options.slice();
                 
                 $scope.$watch('selection.length', function () {
@@ -138,10 +141,19 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
                 };
                 
                 angular.element(document).ready(function() {
-                    NotificationsData.get(function(data){
+                    var components = [];
+                    $scope.loading = true;
+                    for(var c in $scope.options) {
+                        components.push($scope.options[c]["id"]);
+                    }
+                    
+                    NotificationsData.get(components, function(data){
                         $scope.notifications.data = data;
                         $scope.notifications.filter();
-                    }, function(){});
+                        $scope.loading = false;
+                    }, function(){
+                        $scope.loading = false;
+                    });
                 });
             })
 
@@ -161,8 +173,8 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
                 this.response = {};
                 this.data = {};
                 
-                this.get =  function(success,error) {
-                    $http.get('index.php', {params:{method: "notifications"}})
+                this.get =  function(components, success,error) {
+                    $http.get('api/states', {params: {'components[]': components}})
                         .then(function(response) {
                             this.response = response;
                             this.data = response.data;

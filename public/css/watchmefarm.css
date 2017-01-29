@@ -86,3 +86,11 @@
     outline: none;
     background-color: #fff;
 }
+
+#notifications .dropdown-menu {
+    margin-bottom: 50px;
+}
+
+#footer {
+    height: 50px;
+}

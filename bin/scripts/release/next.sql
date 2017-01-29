@@ -66,7 +66,19 @@ CREATE TABLE polls
     foreign key(grow_id) references grow(id),
     foreign key(sensor) references arduino_constants(id),
     index `grow` (grow_id, sensor)
+);
 
+CREATE TABLE states
+(
+    date datetime,
+	grow_id int(11),
+    component int(11),
+    state int(11),
+    
+    primary key(date, grow_id, component),
+    foreign key(grow_id) references grow(id),
+    foreign key(component) references arduino_constants(id),
+    index `grow` (grow_id, component)
 );
 
 UPDATE arduino_constants
