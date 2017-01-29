@@ -5,7 +5,7 @@
 class Poll extends Service{
     
     protected function allowableMethods() {
-        return array(self::POST);
+        return array(self::GET, self::POST);
     }
 
     protected function authorize() {
@@ -21,6 +21,19 @@ class Poll extends Service{
         $reading = $this->m_aInput;
         $PollTable = new PollTable($this->m_oConnection);
         $PollTable->insert("1", $reading["component"], $reading["value"]);
+        return true;
+    }
+    
+    protected function get() {
+        
+        $reading = $this->m_aInput;
+        $PollTable = new PollTable($this->m_oConnection);
+        $this->m_mData = array(
+            "moisture" => $PollTable->getPoll("1", ArduinoConstants::MOISTURE_SENSOR_ID),
+            "photoresistor" => $PollTable->getPoll("1", ArduinoConstants::PHOTORESISTOR_ID),
+            "temp" => $PollTable->getPoll("1", ArduinoConstants::TEMP_SENSOR_ID),
+        );
+        
         return true;
     }
 }

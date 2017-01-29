@@ -145,14 +145,14 @@ define(["../lib/js-common/user/user"], function(user) {
                     moisture.options.scales.yAxes[0].ticks.beginAtZero = true;
                     moisture.options.scales.yAxes[0].ticks.suggestedMax = 100;
                     moisture.map(data.moisture, function(value){
-                        return Math.round(value / 700 * 100)
+                        return Math.round(value / 1024 * 100)
                     });
 
                     var light = getBlankChart("Light", yellow);
                     light.options.scales.yAxes[0].ticks.beginAtZero = true;
                     light.options.scales.yAxes[0].ticks.suggestedMax = 100;
                     light.map(data.photoresistor, function(value){
-                        return Math.round(value / 1023 * 100)
+                        return Math.round(value / 1024 * 100)
                     });
 
                     var temp = getBlankChart("Temperature", green);
@@ -196,7 +196,7 @@ define(["../lib/js-common/user/user"], function(user) {
                 this.data = {};
                 
                 this.get =  function(success,error) {
-                    $http.get('index.php', {params:{method: "sensor_data"}})
+                    $http.get('api/poll')
                         .then(function(response) {
                             this.response = response;
                             this.data = response.data;
