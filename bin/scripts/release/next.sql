@@ -81,6 +81,17 @@ CREATE TABLE states
     index `grow` (grow_id, component)
 );
 
+CREATE TABLE controllers
+(
+    serial_number varchar(256),
+	user_id int(11),
+    created_date datetime,
+    
+    primary key(serial_number),
+    foreign key(user_id) references user(id),
+    index `user` (user_id)
+);
+
 UPDATE arduino_constants
 set name = "Resevior Pump"
 where id = 1000;
