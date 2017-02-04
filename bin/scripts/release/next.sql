@@ -1,5 +1,17 @@
 drop table serial;
 drop table arduino;
+RENAME TABLE user TO users;
+
+CREATE TABLE controllers
+(
+    serial_number varchar(256),
+	user_id int(11),
+    created_date datetime,
+    
+    primary key(serial_number),
+    foreign key(user_id) references users(id),
+    index `user` (user_id)
+);
 
 CREATE TABLE grow
 (
@@ -11,7 +23,7 @@ CREATE TABLE grow
     created_date timestamp,
     
     primary key(id),
-    foreign key(user_id) references user(id),
+    foreign key(user_id) references users(id),
     foreign key(controller_id) references controllers(serial_number),
     index `user` (user_id, arduino_id)
 );
@@ -82,17 +94,6 @@ CREATE TABLE states
     foreign key(grow_id) references grow(id),
     foreign key(component) references arduino_constants(id),
     index `grow` (grow_id, component)
-);
-
-CREATE TABLE controllers
-(
-    serial_number varchar(256),
-	user_id int(11),
-    created_date datetime,
-    
-    primary key(serial_number),
-    foreign key(user_id) references user(id),
-    index `user` (user_id)
 );
 
 UPDATE arduino_constants
