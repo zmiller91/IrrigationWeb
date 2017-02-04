@@ -61,7 +61,7 @@ define([], function() {
                 $scope.create = function() {
                     $uibModalInstance.close({
                         name: $scope.name,
-                        controller: $scope.controller
+                        controller: $scope.selectedController
                     });
                 };
                 
