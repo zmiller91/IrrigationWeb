@@ -24,7 +24,7 @@ class Controller extends Service {
         return true;
     }
     
-    protected function select() {
+    protected function get() {
         $ControllersTable = new ControllerTable($this->m_oConnection);
         $this->m_mData = $ControllersTable->select("1");
         return true;
