@@ -5,10 +5,11 @@ define([
     'components',
     'activities',
     'journal',
+    'navigation',
     'functions',
 ],
 
-  function(user, charts, notifications, components, activities, journal){
+  function(user, charts, notifications, components, activities, journal, navigation){
       
     // Create the base module for the page
     var wmf = angular.module('watchmefarm', ['chart.js', 'ui.bootstrap', 'btorfs.multiselect']);
@@ -21,6 +22,7 @@ define([
     components.init(wmf);
     activities.init(wmf);
     journal.init(wmf);
+    navigation.init(wmf);
     
     // Bootstrap the page
     angular.bootstrap(document, ['watchmefarm']);
