@@ -9,10 +9,15 @@ define([], function() {
                         controller: "NewGrowCtrl",
                         size: 'sm'
                     })
-                    .result.then(function(shouldDelete){
-                        if(!shouldDelete) {
+                    .result.then(function(data){
+                        if(!data) {
                             return;
                         }
+
+                        NavigationService.addGrow(data, 
+                            function() {}, 
+                            function() {}
+                        );
                     });
                 };
 
@@ -36,10 +41,34 @@ define([], function() {
                 };
             })
             
-            .controller("NewGrowCtrl", function ($scope, $uibModalInstance) {
-                $scope.return = function(shouldDelete) {
-                    $uibModalInstance.close(shouldDelete);
-                }
+            .controller("NewGrowCtrl", function ($scope, $uibModalInstance, NavigationService) {
+                
+                $scope.loading = true;
+                $scope.controllers = [];
+                $scope.selectedController = "";
+                $scope.name= "";
+                
+                NavigationService.getControllers(
+                    function(controllers) {
+                        $scope.controllers = controllers;
+                        $scope.loading = false;
+                    }, 
+                    function(){
+                        $scope.loading = false;
+                    }
+                );
+                
+                $scope.create = function() {
+                    $uibModalInstance.close({
+                        name: $scope.name,
+                        controller: $scope.controller
+                    });
+                };
+                
+                $scope.cancel = function() {
+                    $uibModalInstance.close();
+                };
+                
             })
             
             .controller("RegisterPiCtrl", function ($scope, $uibModalInstance) {
@@ -74,13 +103,48 @@ define([], function() {
                             $this.controllers = data;
                             if(success) success();
                         }, error);
+                };
+                    
+                this.addGrow = function(data, success, error) {
+                    this.put('api/grow', data, 
+                        function (data) {
+                            if(success) success();
+                        }, error);
+                };
+                
+                this.getControllers = function(success, error) {
+                    var $this = this;
+                    if(this.controllers.length > 0) {
+                        if(success) success(this.controllers);
+                    }
+                    
+                    this.get('api/controller', null, 
+                        function(response) {
+                           $this.controllers =  response;
+                           if(success) success($this.controllers); 
+                        }, error);
                 }
+                
                 
                 this.put = function(url, data, success, error){
                     $http.put(url, data)
                         .then(function(response) {
                             if (success) {
                                 success(response);
+                            }
+                        }, function(response) {
+                            if (error) {
+                                error(response);
+                            }
+                        }
+                    );
+                };
+                
+                this.get = function(url, data, success, error){
+                    $http.get(url, {params: data})
+                        .then(function(response) {
+                            if (success) {
+                                success(response.data);
                             }
                         }, function(response) {
                             if (error) {
