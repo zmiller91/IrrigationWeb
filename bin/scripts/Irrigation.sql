@@ -2,52 +2,26 @@
 CREATE DATABASE irrigation;
 USE irrigation;
 
-CREATE TABLE arduino (
-    id int not null auto_increment,
-    user_id int,
-    conf blob,
-    primary key (id),
-    foreign key (user_id) references user (id)
-);
-
 CREATE TABLE arduino_constants(
     id int not null,
     name varchar(256),
     primary key (id)
 );
 
-CREATE TABLE serial(
-    id int not null auto_increment,
-    arduino_id int,
-    process int, 
-    type int,
-    value int,
-    date datetime,
-
-    primary key (id),
-    foreign key(arduino_id) references arduino(id),
-    foreign key(process) references arduino_constants(id),
-    foreign key(type) references arduino_constants(id),
-    index `process_key` (arduino_id, process, date),
-    index `type_key` (arduino_id, type, date),
-    index `process_type` (arduino_id, process, type, date)
-);
-
 CREATE TABLE grow
 (
 	id int not null auto_increment,
     user_id int(11),
-    arduino_id int(11),
+    controller_id varchar(256),
     name varchar(256),
     active tinyint,
     created_date timestamp,
     
     primary key(id),
     foreign key(user_id) references user(id),
-    foreign key(arduino_id) references arduino(id),
+    foreign key(controller_id) references controllers(serial_number),
     index `user` (user_id, arduino_id)
 );
-
 
 CREATE TABLE overrides
 (
@@ -59,6 +33,19 @@ CREATE TABLE overrides
     primary key(grow_id, component),
     foreign key(grow_id) references grow(id),
     foreign key(component) references arduino_constants(id),
+    index `grow` (grow_id)
+);
+
+CREATE TABLE journal
+(
+	id int not null auto_increment,
+	grow_id int(11),
+    text blob,
+    edited_date datetime,
+    created_date datetime,
+    
+    primary key(id),
+    foreign key(grow_id) references grow(id),
     index `grow` (grow_id)
 );
 
@@ -76,6 +63,43 @@ CREATE TABLE configuration
     foreign key(component) references arduino_constants(id),
     foreign key(process) references arduino_constants(id),
     index `grow` (grow_id)
+);
+
+CREATE TABLE polls 
+(
+    date datetime,
+	grow_id int(11),
+    sensor int(11),
+    value int(11),
+    
+    primary key(date, grow_id, sensor),
+    foreign key(grow_id) references grow(id),
+    foreign key(sensor) references arduino_constants(id),
+    index `grow` (grow_id, sensor)
+);
+
+CREATE TABLE states
+(
+    date datetime,
+	grow_id int(11),
+    component int(11),
+    state int(11),
+    
+    primary key(date, grow_id, component),
+    foreign key(grow_id) references grow(id),
+    foreign key(component) references arduino_constants(id),
+    index `grow` (grow_id, component)
+);
+
+CREATE TABLE controllers
+(
+    serial_number varchar(256),
+	user_id int(11),
+    created_date datetime,
+    
+    primary key(serial_number),
+    foreign key(user_id) references user(id),
+    index `user` (user_id)
 );
 
 INSERT INTO arduino_constants (name, id) VALUES("ON_OFF", 1);

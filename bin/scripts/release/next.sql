@@ -1,15 +1,18 @@
+drop table serial;
+drop table arduino;
+
 CREATE TABLE grow
 (
 	id int not null auto_increment,
     user_id int(11),
-    arduino_id int(11),
+    controller_id varchar(256),
     name varchar(256),
     active tinyint,
     created_date timestamp,
     
     primary key(id),
     foreign key(user_id) references user(id),
-    foreign key(arduino_id) references arduino(id),
+    foreign key(controller_id) references controllers(serial_number),
     index `user` (user_id, arduino_id)
 );
 
