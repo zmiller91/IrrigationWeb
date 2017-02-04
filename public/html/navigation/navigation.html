@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav id="sidebar" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
@@ -32,12 +32,12 @@
           <li class="button-container">
               <div class="row">
                   <div class="col-sm-12">
-                    <button id="create-new" class="btn btn-default" type="button">
+                    <button class="btn btn-default" type="button" ng-click="registerController()">
                       <i class="fa fa-plus"> Register Controller</i>
                     </button>
                   </div>
                   <div class="col-sm-12">
-                    <button class="btn btn-default" type="button">
+                    <button class="btn btn-default" type="button" ng-click="createGrow()">
                       <i class="fa fa-plus"> Create New Grow</i>
                     </button>
                   </div>

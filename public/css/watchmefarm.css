@@ -23,6 +23,10 @@
     padding-bottom: 6px;
 }
 
+.modal-open {
+    overflow: scroll;
+}
+
 .wmf-modal .well {
     margin-bottom: 0px;
 }
