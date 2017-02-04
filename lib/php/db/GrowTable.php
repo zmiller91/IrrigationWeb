@@ -17,4 +17,20 @@ EOD;
         $this->execute($sql);
         return $this->selectLastInsertID();
     }
+    
+    public function select($userId, $growId = null, $controllerId = null) {
+        
+        $growFilter = isset($growId) ? "AND grow_id = $growId" : "";
+        $controllerFilter = isset($controllerId) ? "AND controller_id = $controllerId" : "";
+        $sql = 
+<<<EOD
+        SELECT *  
+        FROM grow
+        WHERE user_id = $userId
+        $growFilter
+        $controllerFilter;
+EOD;
+        
+        return $this->execute($sql);
+    }
 }

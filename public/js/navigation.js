@@ -3,6 +3,8 @@ define([], function() {
         init: function(app) {
             app.controller("NavigationCtrl", function ($scope, $uibModal, NavigationService) {
 
+                $scope.grows = [];
+
                 $scope.createGrow = function() {
                     $uibModal.open({
                         templateUrl: "html/navigation/new-grow-modal.html",
@@ -39,6 +41,13 @@ define([], function() {
                         );
                     });
                 };
+                
+                angular.element(document).ready(function() {
+                    var data = {user: 1, grow: null, controller: null};
+                    NavigationService.getGrows(data, function(grows){
+                        $scope.grows = grows;
+                    }, null);
+                });
             })
             
             .controller("NewGrowCtrl", function ($scope, $uibModalInstance, NavigationService) {
@@ -92,17 +101,12 @@ define([], function() {
             
             .service('NavigationService', ['$http', function($http) {
                 
-                this.currentGrow = null;
-                this.archivedGrows = [];
+                this.grows = [];
                 this.controllers = [];
                     
                 this.addController = function(controller, success, error) {
-                    var $this = this;
                     this.put('api/controller', {controller: controller}, 
-                        function (data) {
-                            $this.controllers = data;
-                            if(success) success();
-                        }, error);
+                        success, error);
                 };
                     
                 this.addGrow = function(data, success, error) {
@@ -119,6 +123,19 @@ define([], function() {
                     }
                     
                     this.get('api/controller', null, 
+                        function(response) {
+                           $this.controllers =  response;
+                           if(success) success($this.controllers); 
+                        }, error);
+                }
+                
+                this.getGrows = function(data, success, error) {
+                    var $this = this;
+                    if(this.grows.length > 0) {
+                        if(success) success(this.grows);
+                    }
+                    
+                    this.get('api/grow', data, 
                         function(response) {
                            $this.controllers =  response;
                            if(success) success($this.controllers); 

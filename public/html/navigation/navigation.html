@@ -46,9 +46,9 @@
           <li class="section">
               Active Grows
           </li>
-          <li>
-            <a href="" class="active">
-                Active Grow
+          <li ng-repeat="grow in grows | filter: { active: '1' }">
+            <a href="">
+                {{ grow.name }}
                 <div>
                     <small>Jan 23rd, 2016 - Present</small>
                 </div> 
@@ -57,51 +57,11 @@
           <li class="section">
             Archived Grows
           </li>
-          <li>
+          <li ng-repeat="grow in grows | filter: { active: '0' }">
             <a href="">
-                Strain Train
+                {{ grow.name }}
                 <div>
                     <small>Sept 23rd, 2016 - Jan 29th, 2017</small>
-                </div> 
-            </a>
-          </li>
-          <li>
-            <a href="">
-                Moderately Named Strain
-                <div>
-                    <small>May 18th, 2016 - Sept 9th, 2016</small>
-                </div> 
-            </a>
-          </li>
-          <li>
-            <a href="">
-                Crazy Strain Name 
-                <div>
-                    <small>Jan 1st, 2016 - April 20th, 2016</small>
-                </div> 
-            </a>
-          </li>
-          <li>
-            <a href="">
-                Sneaky Sneaky 
-                <div>
-                    <small>Jan 1st, 2015 - April 20th, 2015</small>
-                </div> 
-            </a>
-          </li>
-          <li>
-            <a href="">
-                Super duper duper duper duper duper long name 
-                <div>
-                    <small>Jan 1st, 2016 - April 20th, 2016</small>
-                </div> 
-            </a>
-          </li>
-          <li>
-            <a href="">
-                Feel The Strain
-                <div>
-                    <small>Jan 1st, 2016 - April 20th, 2016</small>
                 </div> 
             </a>
           </li>
