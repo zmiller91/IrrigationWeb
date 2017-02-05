@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            <div ng-show="selected">
+                {{selected.name}}
+                <small>({{selected.controller_id}})</small>
+                <div id="grow-options" class="pull-right">
+                    <span id="date-range">
+                        <span class="date">
+                            Jan 01, 2016
+                            <i class="fa fa-caret-down"></i>
+                        </span>
+                        <span>
+                            -
+                        </span>
+                        <span class="date">
+                            Feb 04, 2016
+                            <i class="fa fa-caret-down"></i>
+                        </span>
+                    </span>              
+                    <span class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a ng-click="detach()">Detach</a></li>
+                            <li><a ng-click="archive()">Archive</a></li>
+                            <li><a ng-click="remove()">Delete</a></li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </h1>
+    </div>
+</div>

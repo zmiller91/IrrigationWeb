@@ -23,11 +23,11 @@ define(["../lib/js-common/user/user"], function(user) {
                         return;
                     }
                     
-                    $scope.selected = NavigationService.selectedInfo;
                     $scope.loading = true;
                     ChartData.get(
                         NavigationService.selectedGrow,
                         function(data){
+                            $scope.selected = NavigationService.selectedInfo;
                             $scope.select('view-water');
                         }, function(){}
                     );
@@ -35,9 +35,7 @@ define(["../lib/js-common/user/user"], function(user) {
                 
                 $scope.$on('grow-updated', update);
                 angular.element(document).ready(update);
-                
-                
-            })
+            });
             
             app.controller("ChartCtrl", function ($scope, $rootScope, ChartData, NavigationService) {
     
@@ -70,6 +68,7 @@ define(["../lib/js-common/user/user"], function(user) {
                         series: [name], //, "5 Period MA"],
                         colors: [color, blue_gray],
                         options: {
+                            animation: false,
                             scales: {
                                 yAxes: [{
                                     ticks: {}

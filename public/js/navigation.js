@@ -106,6 +106,23 @@ define([], function() {
                 };
             })
 
+            .controller("GrowTitleCtrl", function ($scope, NavigationService) {
+                
+                $scope.selected = null;
+                var update = function() {
+                    $scope.selected = NavigationService.selectedInfo;
+                }
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
+            })
+
+            .directive("growTitle", function() {
+                return {
+                    templateUrl: 'html/navigation/grow-title.html'
+                };
+            })
+
             .directive("navigation", function() {
                 return {
                     templateUrl: 'html/navigation/navigation.html'
@@ -118,7 +135,7 @@ define([], function() {
                 this.controllers = [];
                 this.selectedUser = null;
                 this.selectedGrow = null;
-                this.selectedInfo = {};
+                this.selectedInfo = null;
                     
                 this.getProfile = function(user) {
                     if(user === this.selectedUser && this.grows.length > 0) {

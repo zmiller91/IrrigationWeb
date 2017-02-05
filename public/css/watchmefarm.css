@@ -137,3 +137,35 @@
     width: 80%;
     height: 40px;
 }
+
+#grow-options {
+    margin-top: 15px;
+    margin-left: 15px;
+    font-weight: 400;
+    line-height: 1;
+    color: #777;
+    font-size: 65%;
+    
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    -o-user-select: none;
+}
+
+#grow-options #date-range .date,
+#grow-options a {
+    color: #777;
+    cursor: pointer;
+}
+
+#grow-options a:hover {
+        text-decoration: none;
+}
+
+#grow-options #date-range {
+    padding-right:30px;
+}
+
+#grow-options #date-range span{
+    padding-right:5px;
+}
