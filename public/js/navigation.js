@@ -5,10 +5,14 @@ define([], function() {
                 NavigationService.getProfile("1");
             })
                     
-            
+              
             .controller("NavigationCtrl", function ($scope, $uibModal, NavigationService) {
 
                 $scope.grows = [];
+        
+                $scope.selectGrow = function(grow) {
+                    NavigationService.selectGrow(grow);
+                };
 
                 $scope.createGrow = function() {
                     $uibModal.open({
@@ -108,16 +112,28 @@ define([], function() {
                 
                 this.grows = [];
                 this.controllers = [];
-                this.visibleUser = null;
+                this.selectedUser = null;
+                this.selectedGrow = null;
                     
                 this.getProfile = function(user) {
+                    if(user === this.selectedUser && this.grows.length > 0) {
+                        this.selectGrow(this.grows[0]['id']);
+                        return;
+                    }
+                    
                     this.visibleUser = user;
                     var data = {user: user, grow: null, controller: null};
+                    var $this = this;
                     this.getGrows(data, function(grows) {
                         if(grows.length > 0) { 
-                            $rootScope.$broadcast('chart-data-updated', grows[0]['id']);
+                            $this.selectGrow(grows[0]['id']);
                         }
                     });
+                };
+                
+                this.selectGrow = function(grow) {
+                    this.selectedGrow = grow;
+                    $rootScope.$broadcast('grow-updated', this.selectedGrow);
                 }
                     
                 this.addController = function(controller, success, error) {

@@ -24,7 +24,7 @@ class Journal extends Service{
     
     public function get() {
         $JournalTable = new JournalTable($this->m_oConnection);
-        $this->m_mData = $JournalTable->select("1");
+        $this->m_mData = $JournalTable->select($this->m_aInput["grow"]);
         return true;
     }
     

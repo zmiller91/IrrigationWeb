@@ -1,7 +1,7 @@
 define([], function() {
     return {
         init: function(app) {
-            app.controller("JournalCtrl", function ($scope, $uibModal, JournalService) {
+            app.controller("JournalCtrl", function ($scope, $uibModal, JournalService, NavigationService) {
 
                 $scope.journal = [];
                 $scope.newEntry = "";
@@ -80,16 +80,26 @@ define([], function() {
                         }
                 }
                 
-                angular.element(document).ready(function() {
+                var update = function() {
+                    if(NavigationService.selectedGrow === null) {
+                        return;
+                    }
+                    
                     $scope.loading = true;
-                    JournalService.get(function(journal){
-                        $scope.journal = formatJournal(journal);
-                        $scope.loading = false;
-                    }, 
-                    function(){
-                        $scope.loading = false;
-                    });
-                });
+                    JournalService.get(
+                        NavigationService.selectedGrow,
+                        function(journal){
+                            $scope.journal = formatJournal(journal);
+                            $scope.loading = false;
+                        }, 
+                        function(){
+                            $scope.loading = false;
+                        }
+                    );
+                }
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
 
             })
             
@@ -109,8 +119,8 @@ define([], function() {
                     
                 this.journal = [];
                     
-                this.get = function(success, error) {
-                    $http.get('api/journal')
+                this.get = function(grow, success, error) {
+                    $http.get('api/journal', {params: {grow: grow}})
                         .then(function(response) {
                             this.journal = response["data"];
                             if (success) {

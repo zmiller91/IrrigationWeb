@@ -47,7 +47,7 @@
               Active Grows
           </li>
           <li ng-repeat="grow in grows | filter: { active: '1' }">
-            <a href="">
+            <a ng-click="selectGrow(grow.id)">
                 {{ grow.name }}
                 <div>
                     <small>Jan 23rd, 2016 - Present</small>
@@ -58,7 +58,7 @@
             Archived Grows
           </li>
           <li ng-repeat="grow in grows | filter: { active: '0' }">
-            <a href="">
+            <a ng-click="selectGrow(grow.id)">
                 {{ grow.name }}
                 <div>
                     <small>Sept 23rd, 2016 - Jan 29th, 2017</small>
