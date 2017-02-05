@@ -114,9 +114,15 @@
 
 #nav-sidebar li a {
     padding-left: 20px;
+    cursor: pointer;
     
 }#nav-sidebar li a div{
     padding-left: 5px;
+}
+
+#nav-sidebar li a.selected {
+    text-decoration: none;
+    background-color: #eee;
 }
 
 #nav-sidebar .button-container {

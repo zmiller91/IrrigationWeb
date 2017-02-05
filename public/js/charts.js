@@ -7,6 +7,7 @@ define(["../lib/js-common/user/user"], function(user) {
             app.controller("ChartViewCtrl", function ($scope, $rootScope, ChartData, NavigationService) {
                 $scope.view = "";
                 $scope.chartData = {};
+                $scope.selected = null;
                 
                 $scope.select = function(view){
                     $scope.view = view;
@@ -22,6 +23,7 @@ define(["../lib/js-common/user/user"], function(user) {
                         return;
                     }
                     
+                    $scope.selected = NavigationService.selectedInfo;
                     $scope.loading = true;
                     ChartData.get(
                         NavigationService.selectedGrow,

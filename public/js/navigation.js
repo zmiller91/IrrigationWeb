@@ -4,11 +4,11 @@ define([], function() {
             app.controller("ProfileCtrl", function(NavigationService, $routeParams){
                 NavigationService.getProfile("1");
             })
-                    
-              
+                 
             .controller("NavigationCtrl", function ($scope, $uibModal, NavigationService) {
 
                 $scope.grows = [];
+                $scope.selectedGrow = null;
         
                 $scope.selectGrow = function(grow) {
                     NavigationService.selectGrow(grow);
@@ -50,6 +50,10 @@ define([], function() {
                         );
                     });
                 };
+                
+                $scope.$on('grow-updated', function(){
+                    $scope.selectedGrow = NavigationService.selectedGrow;
+                });
                 
                 angular.element(document).ready(function() {
                     var data = {user: 1, grow: null, controller: null};
@@ -114,6 +118,7 @@ define([], function() {
                 this.controllers = [];
                 this.selectedUser = null;
                 this.selectedGrow = null;
+                this.selectedInfo = {};
                     
                 this.getProfile = function(user) {
                     if(user === this.selectedUser && this.grows.length > 0) {
@@ -125,6 +130,7 @@ define([], function() {
                     var data = {user: user, grow: null, controller: null};
                     var $this = this;
                     this.getGrows(data, function(grows) {
+                        $this.grows = grows;
                         if(grows.length > 0) { 
                             $this.selectGrow(grows[0]['id']);
                         }
@@ -133,7 +139,14 @@ define([], function() {
                 
                 this.selectGrow = function(grow) {
                     this.selectedGrow = grow;
-                    $rootScope.$broadcast('grow-updated', this.selectedGrow);
+                    for(var g in this.grows) {
+                        if(this.grows[g]['id'] === grow) {
+                            this.selectedInfo = this.grows[g];
+                            break;
+                        }
+                    };
+                    
+                    $rootScope.$broadcast('grow-updated', this.selectedInfo);
                 }
                     
                 this.addController = function(controller, success, error) {
