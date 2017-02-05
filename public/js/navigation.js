@@ -1,7 +1,12 @@
 define([], function() {
     return {
         init: function(app) {
-            app.controller("NavigationCtrl", function ($scope, $uibModal, NavigationService) {
+            app.controller("ProfileCtrl", function(NavigationService, $routeParams){
+                NavigationService.getProfile("1");
+            })
+                    
+            
+            .controller("NavigationCtrl", function ($scope, $uibModal, NavigationService) {
 
                 $scope.grows = [];
 
@@ -99,10 +104,21 @@ define([], function() {
                 };
             })
             
-            .service('NavigationService', ['$http', function($http) {
+            .service('NavigationService', ['$http', '$rootScope', function($http, $rootScope) {
                 
                 this.grows = [];
                 this.controllers = [];
+                this.visibleUser = null;
+                    
+                this.getProfile = function(user) {
+                    this.visibleUser = user;
+                    var data = {user: user, grow: null, controller: null};
+                    this.getGrows(data, function(grows) {
+                        if(grows.length > 0) { 
+                            $rootScope.$broadcast('chart-data-updated', grows[0]['id']);
+                        }
+                    });
+                }
                     
                 this.addController = function(controller, success, error) {
                     this.put('api/controller', {controller: controller}, 

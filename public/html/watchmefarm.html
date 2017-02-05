@@ -1,0 +1,27 @@
+<div id="navigation" ng-controller="NavigationCtrl" navigation></div>
+<div id="container" class="container-fluid">
+    <div class="row">
+        <div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Active Grow</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div ng-controller="ChartViewCtrl" chart-selection></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div ng-controller="ChartCtrl" chart-view></div>
+                    <div ng-controller="ActivitiesCtrl" activity-schedule></div>
+                    <div ng-controller="JournalCtrl" journal></div>
+                </div>
+                <div class="col-md-4">
+                    <div ng-controller="ComponentsCtrl" component-status></div>
+                    <div ng-controller="NotificationsCtrl" notifications></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

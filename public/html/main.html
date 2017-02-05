@@ -2,13 +2,15 @@
 <html lang="en">
   <head>
 
-      <title>watchmefarm</title>
-      
+    <title>watchmefarm</title>
+    <base href="/">
+    
     <!-- JQuery -->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
       
     <!-- Angular JS -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>  
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6//angular-route.min.js"></script>
     <link rel="stylesheet" href="https://ghinda.net/css-toggle-switch/dist/toggle-switch.css"/>
     
     <!--Load the AJAX API-->
@@ -17,7 +19,7 @@
     <link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     
     
-    <script type="text/javascript" src="lib/angular-chart/angular-chart.js"></script>
+    <script type="text/javascript" src="/lib/angular-chart/angular-chart.js"></script>
     
     <!-- Bootstrap -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.js"></script>
@@ -25,52 +27,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
     
     
-    <script src="lib/bentorfs-multiselect/dist/angular-bootstrap-multiselect.min.js"></script>
-    <link rel="stylesheet" href="lib/sbadmin2/dist/css/sb-admin-2.css">
+    <script src="/lib/bentorfs-multiselect/dist/angular-bootstrap-multiselect.min.js"></script>
+    <link rel="stylesheet" href="/lib/sbadmin2/dist/css/sb-admin-2.css">
     
-    <script data-main="js/watchmefarm" src="lib/requirejs/require.js"></script>
-    <link type="text/css" href="css/watchmefarm.css" rel="stylesheet">
-    <link type="text/css" href="css/timeline.css" rel="stylesheet">
+    <script data-main="/js/watchmefarm" src="/lib/requirejs/require.js"></script>
+    <link type="text/css" href="/css/watchmefarm.css" rel="stylesheet">
+    <link type="text/css" href="/css/timeline.css" rel="stylesheet">
 
   </head>
   
   <body>
-      
-    <div id="navigation" ng-controller="NavigationCtrl" navigation></div>
-
-    <div id="container" class="container-fluid">
-        <div class="row">
-            <div>
-                
-                <!--Body starts here-->
-                
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Active Grow</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div ng-controller="ChartViewCtrl" chart-selection></div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-8">
-                        <div ng-controller="ChartCtrl" chart-view></div>
-                        <div ng-controller="ActivitiesCtrl" activity-schedule></div>
-                        <div ng-controller="JournalCtrl" journal></div>
-                    </div>
-                    <div class="col-md-4">
-                        <div ng-controller="ComponentsCtrl" component-status></div>
-                        <div ng-controller="NotificationsCtrl" notifications></div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
+    <div>
+        <ng-view></ng-view>
     </div>
-      
-
-    
-      
   </body>
 </html>
