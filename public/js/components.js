@@ -1,7 +1,7 @@
 define([], function() {
     return {
         init: function(app) {
-            app.controller("ComponentsCtrl", function ($scope, ComponentStatusData) {
+            app.controller("ComponentsCtrl", function ($scope, ComponentStatusData, NavigationService) {
 
                 $scope.loading = false;
                 $scope.enabled = false;
@@ -31,16 +31,27 @@ define([], function() {
                     });
                 }
                 
-                angular.element(document).ready(function() {
+                var update = function() {
+                    if(NavigationService.selectedGrow === null) {
+                        return;
+                    }
+                    
                     $scope.loading = true;
-                    ComponentStatusData.get(function(data){
-                        $scope.components = data;
-                        $scope.componentEdits = clone($scope.components);
-                        $scope.loading = false;
-                    }, function(){
-                        $scope.loading = false;
-                    });
-                });
+                    ComponentStatusData.get(
+                        NavigationService.selectedGrow,
+                        function(data){
+                            $scope.components = data;
+                            $scope.componentEdits = clone($scope.components);
+                            $scope.loading = false;
+                        }, 
+                        function(){
+                            $scope.loading = false;
+                        }
+                    );
+                }
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
 
             })
 
@@ -68,11 +79,11 @@ define([], function() {
                     );
                 }
                 
-                this.get =  function(success,error) {
+                this.get =  function(grow, success,error) {
                     var components = [RESEVOIR_PUMP_ID, WATER_PUMP_ID, PP1_ID,
                         PP2_ID, PP3_ID, PP4_ID, MIXER_ID, LIGHT_ID, FAN_ID, HEATER_ID];
                     
-                    $http.get('api/overrides', {params: {'overrides[]': components}})
+                    $http.get('api/overrides', {params: {'overrides[]': components, grow: grow}})
                         .then(function(response) {
                             this.response = response;
                             this.data = response.data;

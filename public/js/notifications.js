@@ -1,7 +1,7 @@
 define(['constants', '../lib/js-common/PriorityQueue'], function() {
     return {
         init: function(app) {
-            app.controller("NotificationsCtrl", function ($scope, NotificationsData) {
+            app.controller("NotificationsCtrl", function ($scope, NotificationsData, NavigationService) {
                 $scope.loading = false;
                 $scope.options = [
                     {id: RESEVOIR_PUMP_ID, name: 'Resevior Pump'},
@@ -140,20 +140,34 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
                     },
                 };
                 
-                angular.element(document).ready(function() {
+                var update = function() {
+                    if(NavigationService.selectedGrow === null) {
+                        return;
+                    }
+                    
                     var components = [];
                     $scope.loading = true;
                     for(var c in $scope.options) {
                         components.push($scope.options[c]["id"]);
                     }
                     
-                    NotificationsData.get(components, function(data){
-                        $scope.notifications.data = data;
-                        $scope.notifications.filter();
-                        $scope.loading = false;
-                    }, function(){
-                        $scope.loading = false;
-                    });
+                    NotificationsData.get(
+                        NavigationService.selectedGrow, components, 
+                        function(data){
+                            $scope.notifications.data = data;
+                            $scope.notifications.filter();
+                            $scope.loading = false;
+                        }, 
+                        function(){
+                            $scope.loading = false;
+                        }
+                    );
+                }
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
+                
+                angular.element(document).ready(function() {
                 });
             })
 
@@ -173,8 +187,8 @@ define(['constants', '../lib/js-common/PriorityQueue'], function() {
                 this.response = {};
                 this.data = {};
                 
-                this.get =  function(components, success,error) {
-                    $http.get('api/states', {params: {'components[]': components}})
+                this.get =  function(grow, components, success,error) {
+                    $http.get('api/states', {params: {'components[]': components, grow: grow}})
                         .then(function(response) {
                             this.response = response;
                             this.data = response.data;

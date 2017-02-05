@@ -1,7 +1,7 @@
 define([], function() {
     return {
         init: function(app) {
-            app.controller("ActivitiesCtrl", function ($scope, $http, $uibModal, ActivityService) {
+            app.controller("ActivitiesCtrl", function ($scope, $http, $uibModal, ActivityService, NavigationService) {
                 $scope.Math = window.Math;
                 $scope.enabled = false;
                 $scope.loading = false;
@@ -47,14 +47,24 @@ define([], function() {
                     return parseInt(val);
                 }
                 
-                angular.element(document).ready(function() {
+                var update = function() {
+                    if(NavigationService.selectedGrow === null) {
+                        return;
+                    }
+                    
                     $scope.loading = true;
-                    ActivityService.load(function(data){
-                        $scope.activities = data;
-                        $scope.backup = clone($scope.activities);
-                        $scope.loading = false;
-                    });
-                });
+                    ActivityService.load(
+                        NavigationService.selectedGrow, 
+                        function(data){
+                            $scope.activities = data;
+                            $scope.backup = clone($scope.activities);
+                            $scope.loading = false;
+                        }
+                    );
+                };
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
             })
 
             .controller("ActivityConfCtrl",
@@ -205,7 +215,7 @@ define([], function() {
                     );
                 };
                 
-                this.load = function(onComplete) {
+                this.load = function(grow, onComplete) {
                     var $this = this;
                     var callback = function() {
                         $this.getsFinished++;
@@ -215,16 +225,18 @@ define([], function() {
                     };
                     
                     this.getsFinished = 0;
-                    this.getOverrides(callback);
-                    this.getConfiguration(callback);
-                    this.getComponents(callback);
+                    this.getOverrides(grow, callback);
+                    this.getConfiguration(grow, callback);
+                    this.getComponents(grow, callback);
                 };
                 
-                this.getComponents = function(callback) {
+                this.getComponents = function(grow, callback) {
                     var $this = this;
                     var params = {'components[]': [
                             RESEVOIR_PUMP_ID, WATER_PUMP_ID, PP1_ID, PP2_ID, PP3_ID, PP4_ID
-                    ]};
+                        ],
+                        grow: grow
+                    };
                 
                     $this.get('api/configuration', params,
                     function(result){
@@ -239,9 +251,9 @@ define([], function() {
                     });
                 }
                 
-                this.getConfiguration = function(callback){
+                this.getConfiguration = function(grow, callback){
                     var $this = this;
-                    var params = {'components[]': [ILLUMINATE_ID, IRRIGATE_ID, HVAC_ID]};
+                    var params = {'components[]': [ILLUMINATE_ID, IRRIGATE_ID, HVAC_ID], grow: grow};
                     $this.get('api/configuration', params,
                     function(result){
                         $this.addConfiguration("light", result[ILLUMINATE_ID]);
@@ -255,9 +267,9 @@ define([], function() {
                     });
                 }
                 
-                this.getOverrides = function(callback){
+                this.getOverrides = function(grow, callback){
                     var $this = this;
-                    var params = {'overrides[]': [2001, 2002, 2003]};
+                    var params = {'overrides[]': [2001, 2002, 2003], grow: grow};
                     $this.get('api/overrides', params,
                     function(result){
                         $this.addActivity("light", result[ILLUMINATE_ID]);

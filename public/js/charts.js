@@ -4,7 +4,7 @@ define(["../lib/js-common/user/user"], function(user) {
         init: function(app) {
             user.init(app);
             
-            app.controller("ChartViewCtrl", function ($scope, $rootScope, ChartData) {
+            app.controller("ChartViewCtrl", function ($scope, $rootScope, ChartData, NavigationService) {
                 $scope.view = "";
                 $scope.chartData = {};
                 
@@ -17,16 +17,27 @@ define(["../lib/js-common/user/user"], function(user) {
                     $scope.chartData = data;
                 });
                 
-                angular.element(document).ready(function() {
-                    ChartData.get(function(data){
-                        $scope.select('view-water');
-                    }, function(){});
-                });
+                var update = function() {
+                    if(NavigationService.selectedGrow === null) {
+                        return;
+                    }
+                    
+                    $scope.loading = true;
+                    ChartData.get(
+                        NavigationService.selectedGrow,
+                        function(data){
+                            $scope.select('view-water');
+                        }, function(){}
+                    );
+                }
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
                 
                 
             })
             
-            app.controller("ChartCtrl", function ($scope, $rootScope, ChartData) {
+            app.controller("ChartCtrl", function ($scope, $rootScope, ChartData, NavigationService) {
     
                 Chart.defaults.global.tooltips.enabled = false;
                 Chart.defaults.global.elements.point.radius = 0;
@@ -203,16 +214,27 @@ define(["../lib/js-common/user/user"], function(user) {
                     console.log(points, evt);
                 };
                 
-                angular.element(document).ready(function() {
+                var update = function() {
+                    if(NavigationService.selectedGrow === null) {
+                        return;
+                    }
+                    
                     $scope.loading = true;
-                    ChartData.get(function(data){
-                        $scope.chartData = mapDataToChart(data);
-                        $rootScope.$broadcast('chart-data-updated', $scope.chartData);
-                        $scope.loading = false;
-                    }, function(){
-                        $scope.loading = false;
-                    });
-                });
+                    ChartData.get(
+                        NavigationService.selectedGrow,
+                        function(data){
+                            $scope.chartData = mapDataToChart(data);
+                            $rootScope.$broadcast('chart-data-updated', $scope.chartData);
+                            $scope.loading = false;
+                        }, 
+                        function(){
+                            $scope.loading = false;
+                        }
+                    );
+                }
+                
+                $scope.$on('grow-updated', update);
+                angular.element(document).ready(update);
             })
 
             .directive("chartSelection", function(){
@@ -231,8 +253,8 @@ define(["../lib/js-common/user/user"], function(user) {
                 this.response = {};
                 this.data = {};
                 
-                this.get =  function(success,error) {
-                    $http.get('api/poll')
+                this.get =  function(grow, success,error) {
+                    $http.get('api/poll', {params: {grow: grow}})
                         .then(function(response) {
                             this.response = response;
                             this.data = response.data;
