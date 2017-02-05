@@ -20,7 +20,8 @@ class Overrides extends Service{
     protected function put() {
         
         $OverridesTable = new OverridesTable($this->m_oConnection);
-        $current = $OverridesTable->select("1");
+        $current = $OverridesTable->select($this->m_aInput["grow"]);
+        unset($this->m_aInput["grow"]);
         foreach($this->m_aInput as $row) {
             $s = strtolower($row["state"]);
             $on = $s == "on";
@@ -45,7 +46,7 @@ class Overrides extends Service{
         
         // Get any overrides
         $OverridesTable = new OverridesTable($this->m_oConnection);
-        $overrides = $OverridesTable->select('1');
+        $overrides = $OverridesTable->select($this->m_aInput["grow"]);
         
         // Override the components states
         foreach($components as &$c) {

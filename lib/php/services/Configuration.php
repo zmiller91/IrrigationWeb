@@ -42,7 +42,7 @@ class Configuration extends Service{
         $retval = array();
         $ConfigurationTable = new ConfigurationTable($this->m_oConnection);
         $components = $this->m_aInput["components"];
-        $configuration = $ConfigurationTable->select("1", $components);
+        $configuration = $ConfigurationTable->select($this->m_aInput["grow"], $components);
         
         // Load the component configuration
         foreach($configuration as $k => $c) {

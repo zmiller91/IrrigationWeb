@@ -37,7 +37,7 @@ class States extends Service{
         $componentList = $this->m_aInput["components"];
         $StatesTable = new StatesTable($this->m_oConnection);
         foreach($componentList as $component) {
-            $retval[$component] = $StatesTable->select("1", $component);
+            $retval[$component] = $StatesTable->select($this->m_aInput["grow"], $component);
         }
         
         $this->m_mData = $retval;

@@ -25,14 +25,14 @@ class Poll extends Service{
     }
     
     protected function get() {
-        
-        $reading = $this->m_aInput;
+  
+        $grow = $this->m_aInput["grow"];
         $PollTable = new PollTable($this->m_oConnection);
         $this->m_mData = array(
-            "moisture" => $PollTable->getPoll("1", ArduinoConstants::MOISTURE_SENSOR_ID),
-            "photoresistor" => $PollTable->getPoll("1", ArduinoConstants::PHOTORESISTOR_ID),
-            "temp" => $PollTable->getPoll("1", ArduinoConstants::TEMP_SENSOR_ID),
-            "humidity" => $PollTable->getPoll("1", ArduinoConstants::HUMIDITY_SENSOR_ID)
+            "moisture" => $PollTable->getPoll($grow, ArduinoConstants::MOISTURE_SENSOR_ID),
+            "photoresistor" => $PollTable->getPoll($grow, ArduinoConstants::PHOTORESISTOR_ID),
+            "temp" => $PollTable->getPoll($grow, ArduinoConstants::TEMP_SENSOR_ID),
+            "humidity" => $PollTable->getPoll($grow, ArduinoConstants::HUMIDITY_SENSOR_ID)
         );
         
         return true;
