@@ -9,26 +9,39 @@ class GrowTable extends BaseTable {
         $sql = 
 <<<EOD
         INSERT INTO grow
-        (user_id, controller_id, name, active, created_date)
+        (user_id, controller_id, name, state, created_date)
         VALUES
-        ($userId, '$controllerId', '$name', 1, NOW());
+        ($userId, '$controllerId', '$name', 2, NOW());
 EOD;
         
         $this->execute($sql);
         return $this->selectLastInsertID();
     }
     
-    public function select($userId, $growId = null, $controllerId = null) {
+    public function select($userId = null, $growId = null, $controllerId = null) {
         
-        $growFilter = isset($growId) ? "AND grow_id = $growId" : "";
+        $userFilter = isset($userId) ? "AND user_id = $userId" : "";
+        $growFilter = isset($growId) ? "AND id = $growId" : "";
         $controllerFilter = isset($controllerId) ? "AND controller_id = $controllerId" : "";
         $sql = 
 <<<EOD
         SELECT *  
         FROM grow
-        WHERE user_id = $userId
+        WHERE state > -1
+        $userFilter
         $growFilter
         $controllerFilter;
+EOD;
+        
+        return $this->execute($sql);
+    }
+    
+    public function update($growId, $col, $value) {
+        $sql = 
+<<<EOD
+        UPDATE grow
+        SET $col = '$value'
+        where id = $growId;
 EOD;
         
         return $this->execute($sql);

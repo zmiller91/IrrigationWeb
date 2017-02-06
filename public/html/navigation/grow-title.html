@@ -24,9 +24,9 @@
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a ng-click="detach()">Detach</a></li>
-                            <li><a ng-click="archive()">Archive</a></li>
-                            <li><a ng-click="remove()">Delete</a></li>
+                            <li><a ng-click="updateState(selected.id, 1)">Detach</a></li>
+                            <li><a ng-click="updateState(selected.id, 0)">Archive</a></li>
+                            <li><a ng-click="updateState(selected.id, -1)">Delete</a></li>
                         </ul>
                     </span>
                 </div>

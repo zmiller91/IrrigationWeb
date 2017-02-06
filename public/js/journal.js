@@ -31,7 +31,7 @@ define([], function() {
                 $scope.delete = function(entry) {
                     $uibModal.open({
                         templateUrl: "html/journal/delete-modal.html",
-                        controller: "DeleteJournalCtrl",
+                        controller: "ConfirmationCtrl",
                         size: 'sm'
                     })
                     .result.then(function(shouldDelete){
@@ -103,7 +103,7 @@ define([], function() {
 
             })
             
-            app.controller("DeleteJournalCtrl", function ($scope, $uibModalInstance) {
+            app.controller("ConfirmationCtrl", function ($scope, $uibModalInstance) {
                 $scope.return = function(shouldDelete) {
                     $uibModalInstance.close(shouldDelete);
                 }

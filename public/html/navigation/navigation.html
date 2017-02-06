@@ -46,7 +46,7 @@
           <li class="section">
               Active Grows
           </li>
-          <li ng-repeat="grow in grows | filter: { active: '1' }">
+          <li ng-repeat="grow in grows | filter: { state: '2' }">
             <a ng-click="selectGrow(grow.id)" ng-class="{selected: grow.id == selectedGrow}">
                 {{ grow.name }}
                 <div>
@@ -54,10 +54,17 @@
                 </div> 
             </a>
           </li>
+          <li ng-repeat="grow in grows | filter: { state: '1' }">
+            <a ng-click="selectGrow(grow.id)" ng-class="{selected: grow.id == selectedGrow}">
+                {{ grow.name }}
+                <div>
+                    <small>Jan 23rd, 2016 - Present</small>
+                </div> 
+            </a>
           <li class="section">
             Archived Grows
           </li>
-          <li ng-repeat="grow in grows | filter: { active: '0' }">
+          <li ng-repeat="grow in grows | filter: { state: '0' }">
             <a ng-click="selectGrow(grow.id)" ng-class="{selected: grow.id == selectedGrow}">
                 {{ grow.name }}
                 <div>

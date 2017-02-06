@@ -55,10 +55,17 @@ define([], function() {
                     $scope.selectedGrow = NavigationService.selectedGrow;
                 });
                 
+                $scope.$on('grow-state-changed', function(action, details){
+                    $scope.grows = details['grows'];
+                    if(details['state'] == -1) {
+                        NavigationService.getProfile(NavigationService.selectedUser);
+                    }
+                });
+                
                 angular.element(document).ready(function() {
                     var data = {user: 1, grow: null, controller: null};
                     NavigationService.getGrows(data, function(grows){
-                        $scope.grows = grows;
+                        $scope.grows = NavigationService.grows;
                     }, null);
                 });
             })
@@ -106,9 +113,26 @@ define([], function() {
                 };
             })
 
-            .controller("GrowTitleCtrl", function ($scope, NavigationService) {
+            .controller("GrowTitleCtrl", function ($scope, NavigationService, $uibModal) {
                 
                 $scope.selected = null;
+        
+                $scope.updateState = function(grow, state) {
+                    
+                    $uibModal.open({
+                        templateUrl: "html/journal/delete-modal.html",
+                        controller: "ConfirmationCtrl",
+                        size: 'sm'
+                    })
+                    .result.then(function(shouldDelete){
+                        if(!shouldDelete) {
+                            return;
+                        }
+
+                        NavigationService.changeState(grow, state);
+                    })
+                }
+        
                 var update = function() {
                     $scope.selected = NavigationService.selectedInfo;
                 }
@@ -164,7 +188,17 @@ define([], function() {
                     };
                     
                     $rootScope.$broadcast('grow-updated', this.selectedInfo);
-                }
+                };
+                
+                this.changeState = function(grow, state, success, error) {
+                    var $this = this;
+                    this.patch('api/grow', {grow: grow, updates: {state: state}}, 
+                    function(data) {
+                        $this.grows = data["data"];
+                        $rootScope.$broadcast('grow-state-changed', {grows: $this.grows, state: state});
+                        if(success) success(data);
+                    }, error);
+                };
                     
                 this.addController = function(controller, success, error) {
                     this.put('api/controller', {controller: controller}, 
@@ -172,9 +206,16 @@ define([], function() {
                 };
                     
                 this.addGrow = function(data, success, error) {
+                    var $this = this;
                     this.put('api/grow', data, 
                         function (data) {
-                            if(success) success();
+                            if(data['data'] && data['data'].length > 0) {
+                                var grow = data['data'][0];
+                                $this.grows.unshift(grow);
+                                $this.selectGrow(grow['id']);
+                                $rootScope.$broadcast('grow-state-changed', {grows: $this.grows, state: grow['state']});
+                                if(success) success(grow);
+                            }
                         }, error);
                 };
                 
@@ -204,6 +245,19 @@ define([], function() {
                         }, error);
                 }
                 
+                this.patch = function(url, data, success, error){
+                    $http.patch(url, data)
+                        .then(function(response) {
+                            if (success) {
+                                success(response);
+                            }
+                        }, function(response) {
+                            if (error) {
+                                error(response);
+                            }
+                        }
+                    );
+                };
                 
                 this.put = function(url, data, success, error){
                     $http.put(url, data)

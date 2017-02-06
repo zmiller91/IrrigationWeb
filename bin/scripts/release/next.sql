@@ -19,7 +19,7 @@ CREATE TABLE grow
     user_id int(11),
     controller_id varchar(256),
     name varchar(256),
-    active tinyint,
+    state int(1),
     created_date timestamp,
     
     primary key(id),

@@ -5,7 +5,7 @@
 class Grow extends Service {
 
     protected function allowableMethods() {
-        return array(self::GET, self::PUT);
+        return array(self::GET, self::PUT, self::PATCH);
     }
 
     protected function authorize() {
@@ -16,11 +16,31 @@ class Grow extends Service {
         return true;
     }
     
+    protected function patch() {
+        $grow = $this->m_aInput['grow'];
+        $updates = $this->m_aInput['updates'];
+        
+        $GrowTable = new Growtable($this->m_oConnection);
+        $grow = $GrowTable->select(null, $grow, null);
+        $grow = !empty($grow) ? $grow[0] : null;
+        if(!isset($grow)) {
+            return false;
+        }
+        
+        $user = $grow["user_id"];
+        foreach ($updates as $col => $value) {
+            $GrowTable->update($grow['id'], $col, $value);
+        }
+        
+        $this->m_mData = $GrowTable->select($user, null, null);
+        return true;
+    }
+    
     protected function put() {
         $grow = $this->m_aInput;
         $GrowTable = new Growtable($this->m_oConnection);
-        $grow["id"] = $GrowTable->insert("1", $grow["controller"], $grow["name"]);
-        $this->m_mData = $grow;
+        $id = $GrowTable->insert("1", $grow["controller"], $grow["name"]);
+        $this->m_mData = $GrowTable->select(null, $id);
         return true;
     }
     
