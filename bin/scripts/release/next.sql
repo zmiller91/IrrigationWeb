@@ -75,7 +75,7 @@ CREATE TABLE polls
     date datetime,
 	grow_id int(11),
     sensor int(11),
-    value int(11),
+    value float,
     
     primary key(date, grow_id, sensor),
     foreign key(grow_id) references grow(id),

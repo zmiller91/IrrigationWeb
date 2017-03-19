@@ -194,18 +194,15 @@ define(["../lib/js-common/user/user"], function(user) {
                     var temp = getBlankChart("Temperature", green);
                     temp.options.scales.yAxes[0].ticks.beginAtZero = true;
                     temp.options.scales.yAxes[0].ticks.suggestedMax = 120;
-                    temp.map(data.temp, function(reading){
-                        var voltage = reading * 5 / 1024;
-                        var celcius = (voltage - 0.5) * 100;
-                        var ferenheit = (celcius * 9 / 5) + 32;
-                        return Math.round(ferenheit);
+                    temp.map(data.temp, function(celcius){
+                        return (celcius * 9 / 5) + 32;
                     });
 
                     var humidity = getBlankChart("Humidity", purple);
                     humidity.options.scales.yAxes[0].ticks.beginAtZero = true;
                     humidity.options.scales.yAxes[0].ticks.suggestedMax = 100;
                     humidity.map(data.humidity, function(reading){
-                        return Math.round(reading / 1024 * 100)
+                        return reading;
                     });
 
                     return {moisture: moisture, temp: temp, light: light, humidity: humidity};
